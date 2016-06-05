@@ -1,22 +1,21 @@
 package com.fcasado.betapp;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
-import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.facebook.share.model.AppInviteContent;
+import com.facebook.share.widget.AppInviteDialog;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
@@ -25,42 +24,20 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
 
 	private static final String TAG = "FacebookLogin";
-
-	private ProgressDialog mProgressDialog;
-
 	private FirebaseAuth mAuth;
 	private FirebaseAuth.AuthStateListener mAuthListener;
 	private CallbackManager mCallbackManager;
-
-	public void showProgressDialog() {
-		if (mProgressDialog == null) {
-			mProgressDialog = new ProgressDialog(this);
-			mProgressDialog.setMessage(getString(R.string.loading));
-			mProgressDialog.setIndeterminate(true);
-		}
-
-		mProgressDialog.show();
-	}
-
-	public void hideProgressDialog() {
-		if (mProgressDialog != null && mProgressDialog.isShowing()) {
-			mProgressDialog.hide();
-		}
-	}
-
-	@Override
-	public void onDestroy() {
-		super.onDestroy();
-		hideProgressDialog();
-	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
+
+		// UI
+		findViewById(R.id.button_invite_friends).setOnClickListener(this);
 
 		mAuth = FirebaseAuth.getInstance();
 		mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -69,10 +46,10 @@ public class LoginActivity extends AppCompatActivity {
 				FirebaseUser user = firebaseAuth.getCurrentUser();
 				if (user != null) {
 					// User is signed in
-					Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+					LogUtils.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
 				} else {
 					// User is signed out
-					Log.d(TAG, "onAuthStateChanged:signed_out");
+					LogUtils.d(TAG, "onAuthStateChanged:signed_out");
 				}
 				updateUI(user);
 			}
@@ -85,19 +62,19 @@ public class LoginActivity extends AppCompatActivity {
 		loginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
 			@Override
 			public void onSuccess(LoginResult loginResult) {
-				Log.d(TAG, "facebook:onSuccess:" + loginResult);
+				LogUtils.d(TAG, "facebook:onSuccess:" + loginResult);
 				handleFacebookAccessToken(loginResult.getAccessToken());
 			}
 
 			@Override
 			public void onCancel() {
-				Log.d(TAG, "facebook:onCancel");
+				LogUtils.d(TAG, "facebook:onCancel");
 				updateUI(null);
 			}
 
 			@Override
 			public void onError(FacebookException error) {
-				Log.d(TAG, "facebook:onError", error);
+				LogUtils.d(TAG, "facebook:onError", error);
 				updateUI(null);
 			}
 		});
@@ -124,38 +101,73 @@ public class LoginActivity extends AppCompatActivity {
 	}
 
 	private void handleFacebookAccessToken(AccessToken token) {
-		Log.d(TAG, "handleFacebookAccessToken:" + token);
-		showProgressDialog();
-
+		LogUtils.d(TAG, "handleFacebookAccessToken:" + token);
 		AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
 		mAuth.signInWithCredential(credential)
 				.addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
 					@Override
 					public void onComplete(@NonNull Task<AuthResult> task) {
-						Log.d(TAG, "signInWithCredential:onComplete:" + task.isSuccessful());
+						LogUtils.d(TAG, "signInWithCredential:onComplete:" + task.isSuccessful());
 
 						// If sign in fails, display a message to the user. If sign in succeeds
 						// the auth state listener will be notified and logic to handle the
 						// signed in user can be handled in the listener.
 						if (!task.isSuccessful()) {
-							Log.w(TAG, "signInWithCredential", task.getException());
+							LogUtils.w(TAG, "signInWithCredential", task.getException());
 							Toast.makeText(LoginActivity.this, "Authentication failed.",
 									Toast.LENGTH_SHORT).show();
 						}
-
-						hideProgressDialog();
 					}
 				});
 	}
 
-	public void signOut() {
-		mAuth.signOut();
-		LoginManager.getInstance().logOut();
-
-		updateUI(null);
+	private void updateUI(FirebaseUser user) {
+		findViewById(R.id.button_invite_friends).setVisibility(user != null ? View.VISIBLE : View.GONE);
 	}
 
-	private void updateUI(FirebaseUser user) {
-		hideProgressDialog();
+	private void handleInviteFriends() {
+		String appLinkUrl, previewImageUrl;
+
+		appLinkUrl = "https://fb.me/196364884091856";
+
+		if (AppInviteDialog.canShow()) {
+			AppInviteContent content = new AppInviteContent.Builder()
+					.setApplinkUrl(appLinkUrl)
+					.build();
+			AppInviteDialog.show(this, content);
+		}
+
+//		AppInviteDialog mInvititeDialog = new AppInviteDialog(this);
+//		mInvititeDialog.registerCallback(mCallbackManager,
+//				new FacebookCallback<AppInviteDialog.Result>() {
+//
+//					@Override
+//					public void onSuccess(AppInviteDialog.Result result) {
+//						Toast.makeText(LoginActivity.this, "Invitation Sent Successfully", Toast.LENGTH_SHORT).show();
+//						finish();
+//					}
+//
+//					@Override
+//					public void onCancel() {
+//						Toast.makeText(LoginActivity.this, "Cancelled", Toast.LENGTH_SHORT).show();
+//						finish();
+//					}
+//
+//					@Override
+//					public void onError(FacebookException exception) {
+//						LogUtils.d("Result", "Error " + exception.getMessage());
+//						Toast.makeText(LoginActivity.this, "Error while inviting friends", Toast.LENGTH_SHORT).show();
+//						finish();
+//					}
+//				});
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+			case R.id.button_invite_friends:
+				handleInviteFriends();
+				break;
+		}
 	}
 }
