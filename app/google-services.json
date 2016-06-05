@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "161171406096",
+    "firebase_url": "https://bet-app-7a4b2.firebaseio.com",
+    "project_id": "bet-app-7a4b2",
+    "storage_bucket": "bet-app-7a4b2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:161171406096:android:6e2793269b956a83",
+        "android_client_info": {
+          "package_name": "com.fcasado.betapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "161171406096-sfkoesrturfm182n4vo888dlbgo2anfa.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fcasado.betapp",
+            "certificate_hash": "DA25841533EBBB4B9948E2345F85D4FF06405597"
+          }
+        },
+        {
+          "client_id": "161171406096-vaal10d0qvbsgo3545oifblj7biol72j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBTARgoOCtsHTaPAslhXJvZRKqSBIFYTb8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "161171406096-vaal10d0qvbsgo3545oifblj7biol72j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
