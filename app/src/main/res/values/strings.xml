@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">BetApp</string>
     <string name="facebook_application_id" translatable="false">192198271175184</string>
+    <string name="title">Title</string>
+    <string name="description">Description</string>
+    <string name="from">From</string>
+    <string name="to">To</string>
+    <string name="prize">Prize</string>
 </resources>

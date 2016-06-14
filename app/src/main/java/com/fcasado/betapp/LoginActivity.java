@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -16,6 +15,7 @@ import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.facebook.share.model.AppInviteContent;
 import com.facebook.share.widget.AppInviteDialog;
+import com.fcasado.betapp.create.CreateBetActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
@@ -24,7 +24,7 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
 	private static final String TAG = "FacebookLogin";
 	private FirebaseAuth mAuth;
@@ -38,6 +38,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 		// UI
 		findViewById(R.id.button_invite_friends).setOnClickListener(this);
+		findViewById(R.id.test_create_bet).setOnClickListener(this);
 
 		mAuth = FirebaseAuth.getInstance();
 		mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -168,6 +169,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 			case R.id.button_invite_friends:
 				handleInviteFriends();
 				break;
+			case R.id.test_create_bet:
+				startActivity(new Intent(LoginActivity.this, CreateBetActivity.class));
 		}
 	}
 }

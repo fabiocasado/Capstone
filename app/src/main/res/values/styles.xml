@@ -7,4 +7,19 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+
+    <style name="Container" parent="AppTheme">
+        <item name="android:paddingBottom">@dimen/container_vertical_margin</item>
+        <item name="android:paddingEnd">@dimen/container_horizontal_margin</item>
+        <item name="android:paddingStart">@dimen/container_horizontal_margin</item>
+        <item name="android:paddingTop">@dimen/container_vertical_margin</item>
+    </style>
+
+    <style name="Input.Title" parent="Widget.AppCompat.EditText">
+        <item name="android:inputType">textCapWords</item>
+    </style>
+
+    <style name="Input.Body" parent="Widget.AppCompat.EditText">
+        <item name="android:inputType">textCapSentences</item>
+    </style>
 </resources>
