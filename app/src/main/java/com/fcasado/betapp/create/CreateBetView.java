@@ -14,4 +14,13 @@ public interface CreateBetView extends MvpView {
 	// displays end date
 	void showEndDate(String date);
 
+	// react to bet created
+	void onBetCreated(String error);
+
+	String getBetTitle();
+	String getDescription();
+	long getStartDate();
+	long getEndDate();
+	String getReward();
+
 }

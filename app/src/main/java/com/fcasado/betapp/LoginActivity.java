@@ -137,30 +137,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 					.build();
 			AppInviteDialog.show(this, content);
 		}
-
-//		AppInviteDialog mInvititeDialog = new AppInviteDialog(this);
-//		mInvititeDialog.registerCallback(mCallbackManager,
-//				new FacebookCallback<AppInviteDialog.Result>() {
-//
-//					@Override
-//					public void onSuccess(AppInviteDialog.Result result) {
-//						Toast.makeText(LoginActivity.this, "Invitation Sent Successfully", Toast.LENGTH_SHORT).show();
-//						finish();
-//					}
-//
-//					@Override
-//					public void onCancel() {
-//						Toast.makeText(LoginActivity.this, "Cancelled", Toast.LENGTH_SHORT).show();
-//						finish();
-//					}
-//
-//					@Override
-//					public void onError(FacebookException exception) {
-//						LogUtils.d("Result", "Error " + exception.getMessage());
-//						Toast.makeText(LoginActivity.this, "Error while inviting friends", Toast.LENGTH_SHORT).show();
-//						finish();
-//					}
-//				});
 	}
 
 	@Override

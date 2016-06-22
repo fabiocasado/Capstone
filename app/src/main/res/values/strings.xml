@@ -5,7 +5,7 @@
     <string name="description">Description</string>
     <string name="from">From</string>
     <string name="to">To</string>
-    <string name="prize">Prize</string>
+    <string name="reward">Reward</string>
     <string name="create">Create</string>
     <string name="see_participants">See Participants</string>
 </resources>

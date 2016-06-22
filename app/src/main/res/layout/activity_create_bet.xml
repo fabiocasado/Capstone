@@ -23,6 +23,7 @@
             android:orientation="vertical">
 
             <EditText
+                android:id="@+id/editText_title"
                 style="@style/Input.Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -30,6 +31,7 @@
                 android:maxLines="@integer/input_single_line"/>
 
             <EditText
+                android:id="@+id/editText_description"
                 style="@style/Input.Body"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -57,13 +59,15 @@
             </LinearLayout>
 
             <EditText
+                android:id="@+id/editText_reward"
                 style="@style/Input.Body"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/prize"
+                android:hint="@string/reward"
                 android:maxLines="@integer/input_max_lines"/>
 
             <Button
+                android:id="@+id/button_create"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/create"/>

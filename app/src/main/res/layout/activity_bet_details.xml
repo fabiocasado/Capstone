@@ -60,7 +60,7 @@
                 style="@style/Input.Body"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/prize"
+                android:hint="@string/reward"
                 android:maxLines="@integer/input_max_lines"/>
 
             <Button
