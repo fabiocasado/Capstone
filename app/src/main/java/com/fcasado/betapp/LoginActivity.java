@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.facebook.AccessToken;
+import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -15,6 +16,7 @@ import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.facebook.share.model.AppInviteContent;
 import com.facebook.share.widget.AppInviteDialog;
+import com.fcasado.betapp.bets.BetsListActivity;
 import com.fcasado.betapp.create.CreateBetActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -30,6 +32,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 	private FirebaseAuth mAuth;
 	private FirebaseAuth.AuthStateListener mAuthListener;
 	private CallbackManager mCallbackManager;
+	private AccessTokenTracker mTracker;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -39,6 +42,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 		// UI
 		findViewById(R.id.button_invite_friends).setOnClickListener(this);
 		findViewById(R.id.test_create_bet).setOnClickListener(this);
+		findViewById(R.id.test_list_bets).setOnClickListener(this);
+
+		mTracker = new AccessTokenTracker() {
+			@Override
+			protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
+				if (currentAccessToken == null) {
+					mAuth.signOut();
+				}
+			}
+		};
+		mTracker.startTracking();
 
 		mAuth = FirebaseAuth.getInstance();
 		mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -79,6 +93,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 				updateUI(null);
 			}
 		});
+
+
 	}
 
 	@Override
@@ -92,6 +108,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 		super.onStop();
 		if (mAuthListener != null) {
 			mAuth.removeAuthStateListener(mAuthListener);
+		}
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+
+		if (mTracker != null) {
+			mTracker.stopTracking();
 		}
 	}
 
@@ -147,6 +172,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 				break;
 			case R.id.test_create_bet:
 				startActivity(new Intent(LoginActivity.this, CreateBetActivity.class));
+				break;
+			case R.id.test_list_bets:
+				startActivity(new Intent(LoginActivity.this, BetsListActivity.class));
+				break;
+
 		}
 	}
 }

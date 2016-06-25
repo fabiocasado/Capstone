@@ -20,6 +20,9 @@
         <activity android:name=".create.CreateBetActivity">
         </activity>
 
+        <activity android:name=".bets.BetsListActivity">
+        </activity>
+
         <!-- Facebook Configuration -->
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

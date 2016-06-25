@@ -1,14 +1,10 @@
 package com.fcasado.betapp.create;
 
 import com.fcasado.betapp.LogUtils;
-import com.fcasado.betapp.data.Bet;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.hannesdorfmann.mosby.mvp.MvpBasePresenter;
 
 import java.text.DateFormat;
-import java.util.Date;
 import java.util.GregorianCalendar;
 
 /**
@@ -45,22 +41,24 @@ public class CreateBetPresenter extends MvpBasePresenter<CreateBetView> {
 			return;
 		}
 
-		model.createBet(FirebaseAuth.getInstance().getCurrentUser().getUid(),
-				getView().getBetTitle(),
-				getView().getDescription(),
-				getView().getStartDate(),
-				getView().getEndDate(),
-				getView().getReward(), new CreateBetModel.CreateBetListener() {
-					@Override
-					public void createBetFailed() {
-						getView().onBetCreated("Error");
-					}
+		for (int i = 0; i < 100; i++) {
+			model.createBet(FirebaseAuth.getInstance().getCurrentUser().getUid(),
+					"Bet" + i,
+					getView().getDescription(),
+					getView().getStartDate(),
+					getView().getEndDate(),
+					getView().getReward(), new CreateBetModel.CreateBetListener() {
+						@Override
+						public void createBetFailed() {
+							getView().onBetCreated("Error");
+						}
 
-					@Override
-					public void createBetDone() {
-						getView().onBetCreated(null);
-					}
-				});
+						@Override
+						public void createBetDone() {
+							getView().onBetCreated(null);
+						}
+					});
+		}
 	}
 
 	private boolean validateBetData() {
