@@ -12,6 +12,9 @@ import com.fcasado.betapp.data.Bet;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by fcasado on 6/25/16.
  */
@@ -20,6 +23,11 @@ public class BetsAdapter extends RecyclerView.Adapter<BetsAdapter.BetsHolder> {
 
 	public BetsAdapter() {
 		bets = new ArrayList<>();
+	}
+
+	public void clearBets() {
+		this.bets.clear();
+		notifyDataSetChanged();
 	}
 
 	public void setBets(List<Bet> bets) {
@@ -35,6 +43,7 @@ public class BetsAdapter extends RecyclerView.Adapter<BetsAdapter.BetsHolder> {
 	@Override
 	public void onBindViewHolder(BetsHolder holder, int position) {
 		holder.title.setText(bets.get(position).getTitle());
+		holder.description.setText(bets.get(position).getDescription());
 	}
 
 	@Override
@@ -43,11 +52,14 @@ public class BetsAdapter extends RecyclerView.Adapter<BetsAdapter.BetsHolder> {
 	}
 
 	static class BetsHolder extends RecyclerView.ViewHolder {
-		public TextView title;
+		@BindView(R.id.textView_title)
+		TextView title;
+		@BindView(R.id.textView_description)
+		TextView description;
 
 		public BetsHolder(View itemView) {
 			super(itemView);
-			title = (TextView) itemView.findViewById(R.id.title_textView);
+			ButterKnife.bind(this, itemView);
 		}
 	}
 }

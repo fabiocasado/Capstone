@@ -12,6 +12,9 @@ import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.HttpMethod;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.facebook.share.model.AppInviteContent;
@@ -25,6 +28,9 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -73,7 +79,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 		// Initialize Facebook Login button
 		mCallbackManager = CallbackManager.Factory.create();
 		LoginButton loginButton = (LoginButton) findViewById(R.id.button_facebook_login);
-		loginButton.setReadPermissions("email", "public_profile");
+		loginButton.setReadPermissions("email", "public_profile", "user_friends");
 		loginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
 			@Override
 			public void onSuccess(LoginResult loginResult) {
@@ -127,7 +133,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 	}
 
 	private void handleFacebookAccessToken(AccessToken token) {
-		LogUtils.d(TAG, "handleFacebookAccessToken:" + token);
 		AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
 		mAuth.signInWithCredential(credential)
 				.addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -142,6 +147,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 							LogUtils.w(TAG, "signInWithCredential", task.getException());
 							Toast.makeText(LoginActivity.this, "Authentication failed.",
 									Toast.LENGTH_SHORT).show();
+						} else {
+							findExistingFriends();
 						}
 					}
 				});
@@ -178,5 +185,29 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 				break;
 
 		}
+	}
+
+	private void findExistingFriends() {
+		new GraphRequest(
+				AccessToken.getCurrentAccessToken(),
+				"/me/friends",
+				null,
+				HttpMethod.GET,
+				new GraphRequest.Callback() {
+					public void onCompleted(GraphResponse response) {
+						LogUtils.d(TAG, response.toString());
+											/* handle the result */
+						try {
+							JSONArray data = response.getJSONObject().getJSONArray("data");
+							for (int i = 0; i < data.length(); i++) {
+								LogUtils.d(TAG, "Data[" + i + "]: " + data.get(i).toString());
+							}
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
+
+					}
+				}
+		).executeAsync();
 	}
 }

@@ -16,13 +16,14 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/title_textView"
+            android:id="@+id/textView_title"
             style="@style/Text.Large"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="Bet # 1"/>
 
         <TextView
+            android:id="@+id/textView_description"
             style="@style/Text.Medium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -41,9 +41,8 @@ public class CreateBetPresenter extends MvpBasePresenter<CreateBetView> {
 			return;
 		}
 
-		for (int i = 0; i < 100; i++) {
-			model.createBet(FirebaseAuth.getInstance().getCurrentUser().getUid(),
-					"Bet" + i,
+		model.createBet(FirebaseAuth.getInstance().getCurrentUser().getUid(),
+					getView().getBetTitle(),
 					getView().getDescription(),
 					getView().getStartDate(),
 					getView().getEndDate(),
@@ -58,7 +57,6 @@ public class CreateBetPresenter extends MvpBasePresenter<CreateBetView> {
 							getView().onBetCreated(null);
 						}
 					});
-		}
 	}
 
 	private boolean validateBetData() {

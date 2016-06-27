@@ -18,6 +18,12 @@ import java.util.Map;
 public class CreateBetModel {
 	private static final String TAG = "CreateBetModel";
 
+	public interface CreateBetListener {
+		void createBetFailed();
+
+		void createBetDone();
+	}
+
 	public void createBet(final String authorId, String title, String description, long startDate, long endDate, String reward, final CreateBetListener listener) {
 		FirebaseDatabase database = FirebaseDatabase.getInstance();
 		DatabaseReference betsRef = database.getReference().child(Constants.CHILD_BETS);
@@ -64,11 +70,5 @@ public class CreateBetModel {
 				listener.createBetFailed();
 			}
 		});
-	}
-
-	public interface CreateBetListener {
-		void createBetFailed();
-
-		void createBetDone();
 	}
 }

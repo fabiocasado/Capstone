@@ -1,22 +1,17 @@
 package com.fcasado.betapp.bets;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.annotation.NonNull;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.Toast;
 
+import com.fcasado.betapp.LogUtils;
 import com.fcasado.betapp.R;
 import com.fcasado.betapp.data.Bet;
-import com.fcasado.betapp.data.Constants;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.hannesdorfmann.mosby.mvp.MvpActivity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -25,11 +20,13 @@ import butterknife.ButterKnife;
 /**
  * Created by fcasado on 6/24/16.
  */
-public class BetsListActivity extends AppCompatActivity {
+public class BetsListActivity extends MvpActivity<BetsListView, BetsListPresenter> implements BetsListView, SwipeRefreshLayout.OnRefreshListener {
 	private static final String TAG = "BetsListActivity";
 
 	@BindView(R.id.recyclerView)
 	RecyclerView recyclerView;
+	@BindView(R.id.swiperefresh)
+	SwipeRefreshLayout swipeRefreshLayout;
 
 	private BetsAdapter adapter;
 
@@ -42,44 +39,48 @@ public class BetsListActivity extends AppCompatActivity {
 		adapter = new BetsAdapter();
 		recyclerView.setLayoutManager(new LinearLayoutManager(this));
 		recyclerView.setAdapter(adapter);
+		swipeRefreshLayout.setOnRefreshListener(this);
+	}
 
+	@Override
+	protected void onStart() {
+		super.onStart();
+		swipeRefreshLayout.post(new Runnable() {
+			@Override
+			public void run() {
+				// Workaround since indicator is not showing properly
+				swipeRefreshLayout.setRefreshing(true);
+			}
+		});
 		loadBets();
 	}
 
-	private void loadBets() {
-		FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-		if (currentUser == null) {
-			return;
-		}
+	@NonNull
+	@Override
+	public BetsListPresenter createPresenter() {
+		return new BetsListPresenter();
+	}
 
-		DatabaseReference database = FirebaseDatabase.getInstance().getReference().child(Constants.CHILD_USERS).child(currentUser.getUid());
-		database.child(Constants.CHILD_BETS).addListenerForSingleValueEvent(
-				new ValueEventListener() {
-					@Override
-					public void onDataChange(DataSnapshot dataSnapshot) {
-						final long totalBets = dataSnapshot.getChildrenCount();
-						final List<Bet> bets = new ArrayList<>();
-						for (DataSnapshot data : dataSnapshot.getChildren()) {
-							FirebaseDatabase.getInstance().getReference().child(Constants.CHILD_BETS).child(data.getKey()).addListenerForSingleValueEvent(new ValueEventListener() {
-								@Override
-								public void onDataChange(DataSnapshot dataSnapshot) {
-									bets.add(dataSnapshot.getValue(Bet.class));
-									if (bets.size() == totalBets) {
-										adapter.setBets(bets);
-									}
-								}
+	@Override
+	public void loadBets() {
+		getPresenter().loadBets();
+	}
 
-								@Override
-								public void onCancelled(DatabaseError databaseError) {
+	@Override
+	public void showBets(List<Bet> betList) {
+		adapter.setBets(betList);
+		swipeRefreshLayout.setRefreshing(false);
+	}
 
-								}
-							});
-						}
-					}
+	@Override
+	public void showLoadBetsFailed() {
+		adapter.clearBets();
+		Toast.makeText(this, "Error loading bets", Toast.LENGTH_SHORT).show();
+	}
 
-					@Override
-					public void onCancelled(DatabaseError databaseError) {
-					}
-				});
+	@Override
+	public void onRefresh() {
+		LogUtils.d(TAG, "onRefresh called from SwipeRefreshLayout");
+		loadBets();
 	}
 }
