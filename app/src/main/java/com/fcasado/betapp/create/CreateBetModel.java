@@ -29,7 +29,7 @@ public class CreateBetModel {
 		DatabaseReference betsRef = database.getReference().child(Constants.CHILD_BETS);
 
 		final String betId = betsRef.push().getKey();
-		final Bet bet = new Bet(betId, authorId, title, description, startDate, endDate, reward);
+		Bet bet = new Bet(betId, authorId, title, description, startDate, endDate, reward);
 
 		Map<String, Object> betValues = bet.toMap();
 		Map<String, Object> childUpdates = new HashMap<>();

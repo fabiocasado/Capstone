@@ -33,4 +33,11 @@
         android:layout_below="@id/test_create_bet"
         android:text="List Bets"/>
 
+    <Button
+        android:id="@+id/test_list_friends"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/test_list_bets"
+        android:text="List Friends"/>
+
 </RelativeLayout>

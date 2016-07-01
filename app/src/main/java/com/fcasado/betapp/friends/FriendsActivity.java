@@ -1,4 +1,4 @@
-package com.fcasado.betapp.bets;
+package com.fcasado.betapp.friends;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,7 +9,6 @@ import android.widget.Toast;
 
 import com.fcasado.betapp.LogUtils;
 import com.fcasado.betapp.R;
-import com.fcasado.betapp.data.Bet;
 import com.hannesdorfmann.mosby.mvp.MvpActivity;
 
 import java.util.List;
@@ -17,26 +16,23 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/**
- * Created by fcasado on 6/24/16.
- */
-public class BetsListActivity extends MvpActivity<BetsListView, BetsListPresenter> implements BetsListView, SwipeRefreshLayout.OnRefreshListener {
-	private static final String TAG = "BetsListActivity";
+public class FriendsActivity extends MvpActivity<FriendsView, FriendsPresenter> implements FriendsView, SwipeRefreshLayout.OnRefreshListener {
+	private static final String TAG = "FriendsActivity";
 
 	@BindView(R.id.recyclerView)
 	RecyclerView recyclerView;
 	@BindView(R.id.swiperefresh)
 	SwipeRefreshLayout swipeRefreshLayout;
 
-	private BetsAdapter adapter;
+	private FriendsAdapter adapter;
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_bets_list);
+		setContentView(R.layout.activity_friends);
 		ButterKnife.bind(this);
 
-		adapter = new BetsAdapter();
+		adapter = new FriendsAdapter();
 		recyclerView.setLayoutManager(new LinearLayoutManager(this));
 		recyclerView.setAdapter(adapter);
 		swipeRefreshLayout.setOnRefreshListener(this);
@@ -52,34 +48,35 @@ public class BetsListActivity extends MvpActivity<BetsListView, BetsListPresente
 				swipeRefreshLayout.setRefreshing(true);
 			}
 		});
-		loadBets();
+		loadFriends();
+		getPresenter().loadFriends();
 	}
 
 	@NonNull
 	@Override
-	public BetsListPresenter createPresenter() {
-		return new BetsListPresenter();
+	public FriendsPresenter createPresenter() {
+		return new FriendsPresenter();
 	}
 
 	@Override
-	public void loadBets() {
-		getPresenter().loadBets();
+	public void loadFriends() {
+		getPresenter().loadFriends();
 	}
 
 	@Override
-	public void showBets(List<Bet> betList) {
-		adapter.setBets(betList);
+	public void showFriends(List<String> friends) {
+		adapter.setFriends(friends);
 		swipeRefreshLayout.setRefreshing(false);
 	}
 
 	@Override
-	public void showLoadBetsFailed() {
-		adapter.clearBets();
-		Toast.makeText(this, "Error loading bets", Toast.LENGTH_SHORT).show();
+	public void showLoadFriendsFailed() {
+		adapter.clearFriends();
+		Toast.makeText(this, "Error loading friends", Toast.LENGTH_SHORT).show();
 	}
 
 	@Override
 	public void onRefresh() {
-		loadBets();
+		loadFriends();
 	}
 }

@@ -36,8 +36,14 @@ public class BetsListModel {
 				new ValueEventListener() {
 					@Override
 					public void onDataChange(DataSnapshot dataSnapshot) {
-						final long totalBets = dataSnapshot.getChildrenCount();
 						final List<Bet> betsList = new ArrayList<>();
+						final long totalBets = dataSnapshot.getChildrenCount();
+
+						if (totalBets == 0) {
+							listener.betsLoaded(betsList);
+							return;
+						}
+
 						for (DataSnapshot data : dataSnapshot.getChildren()) {
 							FirebaseDatabase.getInstance().getReference().child(Constants.CHILD_BETS).child(data.getKey()).addListenerForSingleValueEvent(new ValueEventListener() {
 								@Override

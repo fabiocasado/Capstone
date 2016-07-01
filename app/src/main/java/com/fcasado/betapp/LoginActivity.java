@@ -12,15 +12,16 @@ import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
-import com.facebook.HttpMethod;
+import com.facebook.Profile;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.facebook.share.model.AppInviteContent;
 import com.facebook.share.widget.AppInviteDialog;
 import com.fcasado.betapp.bets.BetsListActivity;
 import com.fcasado.betapp.create.CreateBetActivity;
+import com.fcasado.betapp.data.Constants;
+import com.fcasado.betapp.data.User;
+import com.fcasado.betapp.friends.FriendsActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
@@ -28,9 +29,14 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
-import org.json.JSONArray;
-import org.json.JSONException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -49,6 +55,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 		findViewById(R.id.button_invite_friends).setOnClickListener(this);
 		findViewById(R.id.test_create_bet).setOnClickListener(this);
 		findViewById(R.id.test_list_bets).setOnClickListener(this);
+		findViewById(R.id.test_list_friends).setOnClickListener(this);
 
 		mTracker = new AccessTokenTracker() {
 			@Override
@@ -148,7 +155,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 							Toast.makeText(LoginActivity.this, "Authentication failed.",
 									Toast.LENGTH_SHORT).show();
 						} else {
-							findExistingFriends();
+							saveUserDataToDatabase();
 						}
 					}
 				});
@@ -183,31 +190,52 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 			case R.id.test_list_bets:
 				startActivity(new Intent(LoginActivity.this, BetsListActivity.class));
 				break;
+			case R.id.test_list_friends:
+				startActivity(new Intent(LoginActivity.this, FriendsActivity.class));
+				break;
 
 		}
 	}
 
-	private void findExistingFriends() {
-		new GraphRequest(
-				AccessToken.getCurrentAccessToken(),
-				"/me/friends",
-				null,
-				HttpMethod.GET,
-				new GraphRequest.Callback() {
-					public void onCompleted(GraphResponse response) {
-						LogUtils.d(TAG, response.toString());
-											/* handle the result */
-						try {
-							JSONArray data = response.getJSONObject().getJSONArray("data");
-							for (int i = 0; i < data.length(); i++) {
-								LogUtils.d(TAG, "Data[" + i + "]: " + data.get(i).toString());
-							}
-						} catch (JSONException e) {
-							e.printStackTrace();
-						}
+	private void saveUserDataToDatabase() {
+		FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+		Profile fbProfile = Profile.getCurrentProfile();
+		if (currentUser == null || fbProfile == null) {
+			return;
+		}
 
-					}
-				}
-		).executeAsync();
+		User user = new User(currentUser.getUid(), fbProfile.getId(), fbProfile.getName());
+
+		Map<String, Object> userValues = user.toMap();
+		Map<String, Object> childUpdates = new HashMap<>();
+		childUpdates.put(Constants.SEPARATOR + user.getUid(), userValues);
+
+		DatabaseReference database = FirebaseDatabase.getInstance().getReference().child(Constants.CHILD_USERS);
+		database.addListenerForSingleValueEvent(new ValueEventListener() {
+			@Override
+			public void onDataChange(DataSnapshot dataSnapshot) {
+				LogUtils.d(TAG, "Created user profile in db");
+			}
+
+			@Override
+			public void onCancelled(DatabaseError databaseError) {
+
+			}
+		});
+		database.updateChildren(childUpdates);
+
+		DatabaseReference fbDatabase = FirebaseDatabase.getInstance().getReference().child(Constants.CHILD_FACEBOOK).child(user.getFacebookId());
+		fbDatabase.child(Constants.CHILD_USER_ID).setValue(user.getUid());
+		fbDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+			@Override
+			public void onDataChange(DataSnapshot dataSnapshot) {
+				LogUtils.d(TAG, "Data was added: " + dataSnapshot.toString());
+			}
+
+			@Override
+			public void onCancelled(DatabaseError databaseError) {
+				LogUtils.d(TAG, "Data was canceled");
+			}
+		});
 	}
 }
