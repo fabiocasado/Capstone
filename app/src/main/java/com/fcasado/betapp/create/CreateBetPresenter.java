@@ -38,6 +38,9 @@ public class CreateBetPresenter extends MvpBasePresenter<CreateBetView> {
 	public void createDatePressed() {
 		if (!validateBetData()) {
 			LogUtils.d(TAG, "Error validating bet");
+			if (isViewAttached()) {
+				getView().onBetCreated("Error validating bet");
+			}
 			return;
 		}
 
@@ -54,7 +57,9 @@ public class CreateBetPresenter extends MvpBasePresenter<CreateBetView> {
 
 						@Override
 						public void createBetDone() {
-							getView().onBetCreated(null);
+							if (isViewAttached()) {
+								getView().onBetCreated(null);
+							}
 						}
 					});
 	}
@@ -62,7 +67,7 @@ public class CreateBetPresenter extends MvpBasePresenter<CreateBetView> {
 	private boolean validateBetData() {
 		return FirebaseAuth.getInstance().getCurrentUser() != null
 				&& FirebaseAuth.getInstance().getCurrentUser().getUid() != null
-				&& getView() != null
+				&& isViewAttached()
 				&& getView().getBetTitle() != null
 				&& getView().getDescription() != null
 				&& getView().getStartDate() != Long.MIN_VALUE

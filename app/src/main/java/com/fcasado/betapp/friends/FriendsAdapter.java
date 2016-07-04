@@ -1,6 +1,8 @@
 package com.fcasado.betapp.friends;
 
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
+import android.util.ArraySet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,9 +10,12 @@ import android.widget.TextView;
 
 import com.fcasado.betapp.R;
 import com.fcasado.betapp.data.Bet;
+import com.fcasado.betapp.data.User;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -19,19 +24,49 @@ import butterknife.ButterKnife;
  * Created by fcasado on 6/30/16.
  */
 public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.FriendsHolder> {
-	private List<String> friends;
+	public interface OnItemClickListener {
+		void onItemClick(User user);
+	}
 
-	public FriendsAdapter() {
+	private List<User> friends;
+	private boolean isSelectable;
+	private Set<User> selectedFriends;
+	private OnItemClickListener onItemClickListener;
+
+	public FriendsAdapter(final boolean isListSelectable) {
+		isSelectable = isListSelectable;
 		friends = new ArrayList<>();
+		selectedFriends = new HashSet<>();
+		onItemClickListener = new OnItemClickListener() {
+			@Override
+			public void onItemClick(User user) {
+				if (isSelectable) {
+					if (selectedFriends.contains(user)) {
+						selectedFriends.remove(user);
+					} else {
+						selectedFriends.add(user);
+					}
+
+					notifyDataSetChanged();
+				}
+			}
+		};
+	}
+
+	public ArrayList<User> getSelectedUsers() {
+		ArrayList<User> selectedUsers = new ArrayList<>(selectedFriends);
+		return selectedUsers;
 	}
 
 	public void clearFriends() {
-		this.friends.clear();
+		friends.clear();
+		selectedFriends.clear();
 		notifyDataSetChanged();
 	}
 
-	public void setFriends(List<String> friends) {
+	public void setFriends(List<User> friends) {
 		this.friends = friends;
+		selectedFriends.clear();
 		notifyDataSetChanged();
 	}
 
@@ -42,7 +77,10 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.FriendsH
 
 	@Override
 	public void onBindViewHolder(FriendsHolder holder, int position) {
-		holder.name.setText(friends.get(position));
+		User user = friends.get(position);
+		holder.name.setText(user.getName());
+		holder.name.setTextColor(selectedFriends.contains(user) ? Color.RED : Color.BLACK);
+		holder.bindListener(user, onItemClickListener);
 	}
 
 	@Override
@@ -57,6 +95,14 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.FriendsH
 		public FriendsHolder(View itemView) {
 			super(itemView);
 			ButterKnife.bind(this, itemView);
+		}
+
+		public void bindListener(final User user, final OnItemClickListener listener) {
+			itemView.setOnClickListener(new View.OnClickListener() {
+				@Override public void onClick(View v) {
+					listener.onItemClick(user);
+				}
+			});
 		}
 	}
 }

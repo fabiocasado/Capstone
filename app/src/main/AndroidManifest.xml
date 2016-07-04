@@ -22,6 +22,8 @@
         </activity>
         <activity android:name=".friends.FriendsActivity">
         </activity>
+        <activity android:name=".details.BetDetailsActivity">
+        </activity>
 
         <!-- Facebook Configuration -->
         <meta-data

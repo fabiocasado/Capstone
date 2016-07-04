@@ -1,5 +1,8 @@
 package com.fcasado.betapp.data;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.firebase.database.Exclude;
 
 import java.util.HashMap;
@@ -8,7 +11,7 @@ import java.util.Map;
 /**
  * Created by fcasado on 7/1/16.
  */
-public class User {
+public class User implements Parcelable {
 	private String uid;
 	private String facebookId;
 	private String name;
@@ -55,5 +58,35 @@ public class User {
 		result.put("name", name);
 
 		return result;
+	}
+
+	// Parcelable implementation
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeString(uid);
+		dest.writeString(facebookId);
+		dest.writeString(name);
+	}
+
+	public static final Parcelable.Creator<User> CREATOR
+			= new Parcelable.Creator<User>() {
+		public User createFromParcel(Parcel in) {
+			return new User(in);
+		}
+
+		public User[] newArray(int size) {
+			return new User[size];
+		}
+	};
+
+	private User(Parcel in) {
+		uid = in.readString();
+		facebookId = in.readString();
+		name = in.readString();
 	}
 }

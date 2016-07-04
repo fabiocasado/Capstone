@@ -23,6 +23,7 @@
             android:orientation="vertical">
 
             <EditText
+                android:id="@+id/editText_title"
                 style="@style/Input.Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -30,6 +31,7 @@
                 android:maxLines="@integer/input_single_line"/>
 
             <EditText
+                android:id="@+id/editText_description"
                 style="@style/Input.Body"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -57,16 +59,32 @@
             </LinearLayout>
 
             <EditText
+                android:id="@+id/editText_reward"
                 style="@style/Input.Body"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/reward"
                 android:maxLines="@integer/input_max_lines"/>
 
-            <Button
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/see_participants"/>
+                android:orientation="horizontal">
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="@string/see_participants"/>
+
+                <Button
+                    android:id="@+id/button_add_participants"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="@string/add_participants"/>
+
+            </LinearLayout>
         </LinearLayout>
 
     </android.support.v7.widget.CardView>

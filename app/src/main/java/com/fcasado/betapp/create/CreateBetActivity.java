@@ -144,13 +144,15 @@ public class CreateBetActivity extends MvpActivity<CreateBetView, CreateBetPrese
 
 	@OnClick(R.id.button_create)
 	public void onCreatePressed() {
+		findViewById(R.id.button_create).setClickable(false);
 		presenter.createDatePressed();
 	}
 
 	@Override
 	public void onBetCreated(String error) {
+		findViewById(R.id.button_create).setClickable(true);
 		if (error != null) {
-			Toast.makeText(this, "Error creating bet. Please try again.", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
 		} else {
 			finish();
 		}

@@ -1,5 +1,6 @@
 package com.fcasado.betapp.friends;
 
+import com.fcasado.betapp.data.User;
 import com.hannesdorfmann.mosby.mvp.MvpBasePresenter;
 
 import java.util.List;
@@ -26,7 +27,7 @@ public class FriendsPresenter extends MvpBasePresenter<FriendsView> {
 			}
 
 			@Override
-			public void friendsLoaded(List<String> friends) {
+			public void friendsLoaded(List<User> friends) {
 				if (isViewAttached()) {
 					getView().showFriends(friends);
 				}

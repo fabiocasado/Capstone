@@ -43,7 +43,7 @@ public class FriendsModel {
 		try {
 			JSONArray data = response.getJSONObject().getJSONArray("data");
 
-			final List<String> friends = new ArrayList<>();
+			final List<User> friends = new ArrayList<>();
 			final int friendsCount = data.length();
 			if (friendsCount == 0) {
 				listener.friendsLoaded(friends);
@@ -73,13 +73,12 @@ public class FriendsModel {
 		}
 	}
 
-	private void getUserDataFromUserId(final int totalUsers, final List<String> users, String userId, final LoadFriendsListener listener) {
+	private void getUserDataFromUserId(final int totalUsers, final List<User> users, String userId, final LoadFriendsListener listener) {
 		DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference().child(Constants.CHILD_USERS).child(userId);
 		usersRef.addListenerForSingleValueEvent(new ValueEventListener() {
 			@Override
 			public void onDataChange(DataSnapshot dataSnapshot) {
-				User user = dataSnapshot.getValue(User.class);
-				users.add(user.getName());
+				users.add(dataSnapshot.getValue(User.class));
 
 				if (users.size() == totalUsers && listener != null) {
 					listener.friendsLoaded(users);
@@ -98,6 +97,6 @@ public class FriendsModel {
 	public interface LoadFriendsListener {
 		void friendsLoadFailed();
 
-		void friendsLoaded(List<String> friends);
+		void friendsLoaded(List<User> friends);
 	}
 }

@@ -1,15 +1,18 @@
 package com.fcasado.betapp.bets;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.BaseAdapter;
 import android.widget.Toast;
 
 import com.fcasado.betapp.LogUtils;
 import com.fcasado.betapp.R;
 import com.fcasado.betapp.data.Bet;
+import com.fcasado.betapp.details.BetDetailsActivity;
 import com.hannesdorfmann.mosby.mvp.MvpActivity;
 
 import java.util.List;
@@ -20,7 +23,8 @@ import butterknife.ButterKnife;
 /**
  * Created by fcasado on 6/24/16.
  */
-public class BetsListActivity extends MvpActivity<BetsListView, BetsListPresenter> implements BetsListView, SwipeRefreshLayout.OnRefreshListener {
+public class BetsListActivity extends MvpActivity<BetsListView, BetsListPresenter> implements BetsListView,
+		SwipeRefreshLayout.OnRefreshListener, BetsAdapter.OnItemClickListener {
 	private static final String TAG = "BetsListActivity";
 
 	@BindView(R.id.recyclerView)
@@ -36,7 +40,7 @@ public class BetsListActivity extends MvpActivity<BetsListView, BetsListPresente
 		setContentView(R.layout.activity_bets_list);
 		ButterKnife.bind(this);
 
-		adapter = new BetsAdapter();
+		adapter = new BetsAdapter(this);
 		recyclerView.setLayoutManager(new LinearLayoutManager(this));
 		recyclerView.setAdapter(adapter);
 		swipeRefreshLayout.setOnRefreshListener(this);
@@ -81,5 +85,13 @@ public class BetsListActivity extends MvpActivity<BetsListView, BetsListPresente
 	@Override
 	public void onRefresh() {
 		loadBets();
+	}
+
+	@Override
+	public void onItemClick(Bet bet) {
+		Intent intent = new Intent(this, BetDetailsActivity.class);
+		intent.putExtra(BetDetailsActivity.EXTRA_BET, bet);
+//		intent.putExtra(BetDetailsActivity.EXTRA_BET_ID, bet.getBetId());
+		startActivity(intent);
 	}
 }
