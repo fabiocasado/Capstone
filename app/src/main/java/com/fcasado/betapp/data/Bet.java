@@ -169,7 +169,7 @@ public class Bet implements Parcelable {
 		description = in.readString();
 		startDate = in.readLong();
 		endDate = in.readLong();
-		description = in.readString();
+		reward = in.readString();
 		participants = in.readArrayList(String.class.getClassLoader());
 	}
 }

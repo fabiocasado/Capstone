@@ -81,7 +81,7 @@ public class CreateBetActivity extends MvpActivity<CreateBetView, CreateBetPrese
 		long startDate = Long.MIN_VALUE;
 		if (startDatePicker != null) {
 			DatePicker datePicker = startDatePicker.getDatePicker();
-			GregorianCalendar calendar = new GregorianCalendar(datePicker.getDayOfMonth(), datePicker.getMonth(), datePicker.getYear());
+			GregorianCalendar calendar = new GregorianCalendar(datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth());
 			startDate = calendar.getTimeInMillis();
 		}
 		return startDate;
@@ -92,7 +92,7 @@ public class CreateBetActivity extends MvpActivity<CreateBetView, CreateBetPrese
 		long endDate = Long.MIN_VALUE;
 		if (endDatePicker != null) {
 			DatePicker datePicker = endDatePicker.getDatePicker();
-			GregorianCalendar calendar = new GregorianCalendar(datePicker.getDayOfMonth(), datePicker.getMonth(), datePicker.getYear());
+			GregorianCalendar calendar = new GregorianCalendar(datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth());
 			endDate = calendar.getTimeInMillis();
 		}
 		return endDate;

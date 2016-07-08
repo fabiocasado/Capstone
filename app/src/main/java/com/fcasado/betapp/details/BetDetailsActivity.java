@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -15,7 +16,11 @@ import com.fcasado.betapp.R;
 import com.fcasado.betapp.data.Bet;
 import com.fcasado.betapp.data.Constants;
 import com.fcasado.betapp.data.User;
+import com.fcasado.betapp.friends.AddParticipantsActivity;
+import com.fcasado.betapp.friends.BetParticipantsActivity;
 import com.fcasado.betapp.friends.FriendsActivity;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.hannesdorfmann.mosby.mvp.MvpActivity;
 
 import java.util.List;
@@ -42,6 +47,8 @@ public class BetDetailsActivity extends MvpActivity<BetDetailsView, BetDetailsPr
 	EditText editTextDescription;
 	@BindView(R.id.editText_reward)
 	EditText editTextReward;
+	@BindView(R.id.button_add_participants)
+	Button buttonAddParticipants;
 
 	private Bet bet;
 
@@ -58,6 +65,9 @@ public class BetDetailsActivity extends MvpActivity<BetDetailsView, BetDetailsPr
 		} else {
 			showDetails();
 		}
+
+		FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+		setEditionEnabled(currentUser != null && currentUser.getUid().equalsIgnoreCase(bet.getAuthorId()));
 	}
 
 	@Override
@@ -128,10 +138,26 @@ public class BetDetailsActivity extends MvpActivity<BetDetailsView, BetDetailsPr
 
 	@OnClick(R.id.button_add_participants)
 	@Override
-	public void onAddParticipantsClicked() {
-		Intent intent = new Intent(this, FriendsActivity.class);
-		intent.putExtra(FriendsActivity.EXTRA_RETURN_SELECTION, true);
+	public void showAddParticipants() {
+		Intent intent = new Intent(this, AddParticipantsActivity.class);
 		intent.putExtra(FriendsActivity.EXTRA_CURRENT_BET, bet);
 		startActivityForResult(intent, FriendsActivity.REQUEST_CODE_SELECTION);
+	}
+
+	@OnClick(R.id.button_show_participants)
+	@Override
+	public void showBetParticipants() {
+		Intent intent = new Intent(this, BetParticipantsActivity.class);
+		intent.putExtra(FriendsActivity.EXTRA_CURRENT_BET, bet);
+		startActivity(intent);
+	}
+
+	private void setEditionEnabled(boolean isEnabled) {
+		buttonStartDate.setClickable(isEnabled);
+		buttonEndDate.setClickable(isEnabled);
+		editTextTitle.setEnabled(isEnabled);
+		editTextDescription.setEnabled(isEnabled);
+		editTextReward.setEnabled(isEnabled);
+		buttonAddParticipants.setVisibility(isEnabled ? View.VISIBLE : View.GONE);
 	}
 }

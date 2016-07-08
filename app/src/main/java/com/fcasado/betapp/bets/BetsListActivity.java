@@ -91,7 +91,6 @@ public class BetsListActivity extends MvpActivity<BetsListView, BetsListPresente
 	public void onItemClick(Bet bet) {
 		Intent intent = new Intent(this, BetDetailsActivity.class);
 		intent.putExtra(BetDetailsActivity.EXTRA_BET, bet);
-//		intent.putExtra(BetDetailsActivity.EXTRA_BET_ID, bet.getBetId());
 		startActivity(intent);
 	}
 }

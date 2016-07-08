@@ -21,6 +21,9 @@ public interface BetDetailsView extends MvpView {
 	// show bet details failed
 	void showDetailsFailed();
 
-	// addParticipants()
-	void onAddParticipantsClicked();
+	// show add participants
+	void showAddParticipants();
+
+	// show bet participants
+	void showBetParticipants();
 }
