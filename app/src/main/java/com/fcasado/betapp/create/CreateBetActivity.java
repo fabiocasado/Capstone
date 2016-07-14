@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.fcasado.betapp.R;
 import com.hannesdorfmann.mosby.mvp.MvpActivity;
 
+import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -40,6 +41,9 @@ public class CreateBetActivity extends MvpActivity<CreateBetView, CreateBetPrese
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_create_bet);
 		ButterKnife.bind(this);
+
+		initStartDatePicker();
+		initEndDatePicker();
 	}
 
 	@Override
@@ -106,39 +110,11 @@ public class CreateBetActivity extends MvpActivity<CreateBetView, CreateBetPrese
 
 	@OnClick(R.id.button_start_date)
 	public void onStartDatePressed() {
-		if (startDatePicker == null) {
-			Calendar c = GregorianCalendar.getInstance();
-			int year = c.get(Calendar.YEAR);
-			int month = c.get(Calendar.MONTH);
-			int day = c.get(Calendar.DAY_OF_MONTH);
-
-			startDatePicker = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
-				@Override
-				public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-					presenter.selectStartDate(year, monthOfYear, dayOfMonth);
-				}
-			}, year, month, day);
-		}
-
 		startDatePicker.show();
 	}
 
 	@OnClick(R.id.button_end_date)
 	public void onEndDatePressed() {
-		if (endDatePicker == null) {
-			Calendar c = GregorianCalendar.getInstance();
-			int year = c.get(Calendar.YEAR);
-			int month = c.get(Calendar.MONTH);
-			int day = c.get(Calendar.DAY_OF_MONTH);
-
-			endDatePicker = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
-				@Override
-				public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-					presenter.selectEndDate(year, monthOfYear, dayOfMonth);
-				}
-			}, year, month, day);
-		}
-
 		endDatePicker.show();
 	}
 
@@ -156,5 +132,40 @@ public class CreateBetActivity extends MvpActivity<CreateBetView, CreateBetPrese
 		} else {
 			finish();
 		}
+	}
+
+	private void initStartDatePicker() {
+		Calendar c = GregorianCalendar.getInstance();
+		int year = c.get(Calendar.YEAR);
+		int month = c.get(Calendar.MONTH);
+		int day = c.get(Calendar.DAY_OF_MONTH);
+
+		startDatePicker = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+			@Override
+			public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+				presenter.selectStartDate(year, monthOfYear, dayOfMonth);
+			}
+		}, year, month, day);
+
+		DateFormat df = DateFormat.getDateInstance();
+		showStartDate(df.format(c.getTime()));
+	}
+
+	private void initEndDatePicker() {
+		Calendar c = GregorianCalendar.getInstance();
+		c.add(Calendar.DAY_OF_MONTH, 1);
+		int year = c.get(Calendar.YEAR);
+		int month = c.get(Calendar.MONTH);
+		int day = c.get(Calendar.DAY_OF_MONTH);
+
+		endDatePicker = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+			@Override
+			public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+				presenter.selectEndDate(year, monthOfYear, dayOfMonth);
+			}
+		}, year, month, day);
+
+		DateFormat df = DateFormat.getDateInstance();
+		showEndDate(df.format(c.getTime()));
 	}
 }

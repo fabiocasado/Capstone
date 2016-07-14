@@ -13,6 +13,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.MutableData;
+import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -28,8 +30,34 @@ public class BetDetailsModel {
 
 	public interface LoadDetailsListener {
 		void updateDetailsFailed();
-
 		void detailsUpdated(Bet bet);
+	}
+
+	public interface DeleteBetListener {
+		void deleteBetFailed();
+		void betDeleted();
+	}
+
+	public void deleteBet(Bet bet, final DeleteBetListener listener) {
+		FirebaseDatabase database = FirebaseDatabase.getInstance();
+		DatabaseReference betRef = database.getReference().child(Constants.CHILD_BETS).child(bet.getBetId());
+		// Go through participants and delete bet from their list.
+		for (String userId : bet.getParticipants()) {
+			removeBetFromParticipants(userId, bet.getBetId());
+		}
+
+		// Delete bet
+		betRef.removeValue(new DatabaseReference.CompletionListener() {
+			@Override
+			public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+				if (databaseError != null) {
+					listener.deleteBetFailed();
+					return;
+				}
+
+				listener.betDeleted();
+			}
+		});
 	}
 
 	public void updateDetails(final Bet bet, final LoadDetailsListener listener) {
@@ -40,7 +68,6 @@ public class BetDetailsModel {
 			public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
 				if (databaseError == null) {
 					updateBetParticipants(bet, listener);
-//					listener.detailsUpdated(bet);
 					return;
 				}
 
@@ -67,6 +94,11 @@ public class BetDetailsModel {
 				listener.updateDetailsFailed();
 			}
 		});
+	}
+
+	private void removeBetFromParticipants(String userId, String betId) {
+		DatabaseReference userBetsRef = FirebaseDatabase.getInstance().getReference().child(Constants.CHILD_USERS).child(userId).child(Constants.CHILD_BETS);
+		userBetsRef.child(betId).removeValue();
 	}
 
 }

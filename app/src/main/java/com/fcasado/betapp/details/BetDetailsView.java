@@ -1,6 +1,7 @@
 package com.fcasado.betapp.details;
 
 import com.fcasado.betapp.data.Bet;
+import com.fcasado.betapp.data.BetDataView;
 import com.hannesdorfmann.mosby.mvp.MvpView;
 
 import java.util.List;
@@ -8,18 +9,21 @@ import java.util.List;
 /**
  * Created by fcasado on 7/1/16.
  */
-public interface BetDetailsView extends MvpView {
-	// update details
-	void updateDetails();
+public interface BetDetailsView extends BetDataView {
+	// show bet deleted
+	void showBetDeleted();
+
+	// show delete failed
+	void showDeleteFailed();
 
 	// show updated bet
 	void showUpdatedDetails(Bet bet);
 
+	// show update failed
+	void showUpdateFailed();
+
 	// show bet details
 	void showDetails();
-
-	// show bet details failed
-	void showDetailsFailed();
 
 	// show add participants
 	void showAddParticipants();

@@ -10,4 +10,5 @@
     <string name="see_participants">See Participants</string>
     <string name="add_participants">Add Participants</string>
     <string name="save">Save</string>
+    <string name="delete">Delete</string>
 </resources>

@@ -1,5 +1,6 @@
 package com.fcasado.betapp.details;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -8,6 +9,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -23,6 +25,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.hannesdorfmann.mosby.mvp.MvpActivity;
 
+import java.text.DateFormat;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import butterknife.BindView;
@@ -49,6 +54,8 @@ public class BetDetailsActivity extends MvpActivity<BetDetailsView, BetDetailsPr
 	EditText editTextReward;
 	@BindView(R.id.button_add_participants)
 	Button buttonAddParticipants;
+	private DatePickerDialog startDatePicker;
+	private DatePickerDialog endDatePicker;
 
 	private Bet bet;
 
@@ -81,7 +88,10 @@ public class BetDetailsActivity extends MvpActivity<BetDetailsView, BetDetailsPr
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 			case R.id.save:
-				updateDetails();
+				getPresenter().updateDetails(bet);
+				return true;
+			case R.id.delete:
+				getPresenter().deleteBet(bet);
 				return true;
 			default:
 				return super.onOptionsItemSelected(item);
@@ -111,8 +121,71 @@ public class BetDetailsActivity extends MvpActivity<BetDetailsView, BetDetailsPr
 	}
 
 	@Override
-	public void updateDetails() {
-		getPresenter().updateDetails(bet);
+	public void showStartDate(String date) {
+		buttonStartDate.setText(date);
+	}
+
+	@Override
+	public void showEndDate(String date) {
+		buttonEndDate.setText(date);
+	}
+
+	@Override
+	public String getBetTitle() {
+		return editTextTitle.getText().toString();
+	}
+
+	@Override
+	public String getDescription() {
+		return editTextDescription.getText().toString();
+	}
+
+	@Override
+	public long getStartDate() {
+		long startDate = Long.MIN_VALUE;
+		if (startDatePicker != null) {
+			DatePicker datePicker = startDatePicker.getDatePicker();
+			GregorianCalendar calendar = new GregorianCalendar(datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth());
+			startDate = calendar.getTimeInMillis();
+		}
+		return startDate;
+	}
+
+	@Override
+	public long getEndDate() {
+		long endDate = Long.MIN_VALUE;
+		if (endDatePicker != null) {
+			DatePicker datePicker = endDatePicker.getDatePicker();
+			GregorianCalendar calendar = new GregorianCalendar(datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth());
+			endDate = calendar.getTimeInMillis();
+		}
+		return endDate;
+	}
+
+	@Override
+	public String getReward() {
+		return editTextReward.getText().toString();
+	}
+
+	@OnClick(R.id.button_start_date)
+	public void onStartDatePressed() {
+		startDatePicker.show();
+	}
+
+	@OnClick(R.id.button_end_date)
+	public void onEndDatePressed() {
+		endDatePicker.show();
+	}
+
+	@Override
+	public void showBetDeleted() {
+		Toast.makeText(this, "Bet deleted", Toast.LENGTH_SHORT).show();
+		finish();
+	}
+
+	@Override
+	public void showDeleteFailed() {
+		Toast.makeText(this, "Bet deletion failed. Please try again.", Toast.LENGTH_SHORT).show();
 	}
 
 	@Override
@@ -122,18 +195,19 @@ public class BetDetailsActivity extends MvpActivity<BetDetailsView, BetDetailsPr
 		showDetails();
 	}
 
+	@Override
+	public void showUpdateFailed() {
+		Toast.makeText(this, "Update failed. Please check your data and try again.", Toast.LENGTH_SHORT).show();
+	}
+
 	public void showDetails() {
 		editTextTitle.setText(bet.getTitle());
 		editTextDescription.setText(bet.getDescription());
 		editTextReward.setText(bet.getReward());
 		buttonStartDate.setText(DateStringUtils.getDateString(bet.getStartDate()));
 		buttonEndDate.setText(DateStringUtils.getDateString(bet.getEndDate()));
-	}
-
-	@Override
-	public void showDetailsFailed() {
-		Toast.makeText(this, "Bet details couldn't be loaded.  Please refresh bet list.", Toast.LENGTH_SHORT).show();
-		finish();
+		initStartDatePicker();
+		initEndDatePicker();
 	}
 
 	@OnClick(R.id.button_add_participants)
@@ -159,5 +233,41 @@ public class BetDetailsActivity extends MvpActivity<BetDetailsView, BetDetailsPr
 		editTextDescription.setEnabled(isEnabled);
 		editTextReward.setEnabled(isEnabled);
 		buttonAddParticipants.setVisibility(isEnabled ? View.VISIBLE : View.GONE);
+	}
+
+	private void initStartDatePicker() {
+		Calendar c = GregorianCalendar.getInstance();
+		c.setTimeInMillis(bet.getStartDate());
+		int year = c.get(Calendar.YEAR);
+		int month = c.get(Calendar.MONTH);
+		int day = c.get(Calendar.DAY_OF_MONTH);
+
+		startDatePicker = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+			@Override
+			public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+				presenter.selectStartDate(year, monthOfYear, dayOfMonth);
+			}
+		}, year, month, day);
+
+		DateFormat df = DateFormat.getDateInstance();
+		showStartDate(df.format(c.getTime()));
+	}
+
+	private void initEndDatePicker() {
+		Calendar c = GregorianCalendar.getInstance();
+		c.setTimeInMillis(bet.getEndDate());
+		int year = c.get(Calendar.YEAR);
+		int month = c.get(Calendar.MONTH);
+		int day = c.get(Calendar.DAY_OF_MONTH);
+
+		endDatePicker = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+			@Override
+			public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+				presenter.selectEndDate(year, monthOfYear, dayOfMonth);
+			}
+		}, year, month, day);
+
+		DateFormat df = DateFormat.getDateInstance();
+		showEndDate(df.format(c.getTime()));
 	}
 }

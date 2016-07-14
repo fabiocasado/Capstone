@@ -1,10 +1,13 @@
 package com.fcasado.betapp.create;
 
+import android.text.TextUtils;
+
 import com.fcasado.betapp.LogUtils;
 import com.google.firebase.auth.FirebaseAuth;
 import com.hannesdorfmann.mosby.mvp.MvpBasePresenter;
 
 import java.text.DateFormat;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 /**
@@ -68,10 +71,9 @@ public class CreateBetPresenter extends MvpBasePresenter<CreateBetView> {
 		return FirebaseAuth.getInstance().getCurrentUser() != null
 				&& FirebaseAuth.getInstance().getCurrentUser().getUid() != null
 				&& isViewAttached()
-				&& getView().getBetTitle() != null
-				&& getView().getDescription() != null
+				&& !TextUtils.isEmpty(getView().getBetTitle())
+				&& !TextUtils.isEmpty(getView().getDescription())
 				&& getView().getStartDate() != Long.MIN_VALUE
-				&& getView().getEndDate() != Long.MIN_VALUE
-				&& getView().getReward() != null;
+				&& !TextUtils.isEmpty(getView().getReward());
 	}
 }
