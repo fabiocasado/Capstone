@@ -24,6 +24,8 @@ public class Bet implements Parcelable {
 
 	private List<String> participants;
 
+	private List<String> predictions;
+
 	public Bet() {
 
 	}
@@ -38,6 +40,8 @@ public class Bet implements Parcelable {
 		this.reward = reward;
 		participants = new ArrayList<>();
 		participants.add(authorId);
+		predictions = new ArrayList<>();
+		predictions.add("");
 	}
 
 	@Override
@@ -51,6 +55,7 @@ public class Bet implements Parcelable {
 				", endDate=" + endDate +
 				", reward='" + reward + '\'' +
 				", participants=" + participants +
+				", predictions=" + predictions +
 				'}';
 	}
 
@@ -118,6 +123,23 @@ public class Bet implements Parcelable {
 		this.participants = participants;
 	}
 
+	public List<String> getPredictions() {
+		return predictions;
+	}
+
+	public void setPredictions(List<String> predictions) {
+		this.predictions = predictions;
+	}
+
+	public String getPredictionForUser(String userId) {
+		int index = participants.indexOf(userId);
+		if (index >= 0) {
+			return predictions.get(index);
+		}
+
+		return null;
+	}
+
 	@Exclude
 	public Map<String, Object> toMap() {
 		HashMap<String, Object> result = new HashMap<>();
@@ -129,6 +151,7 @@ public class Bet implements Parcelable {
 		result.put("endDate", endDate);
 		result.put("reward", reward);
 		result.put("participants", participants);
+		result.put("predictions", predictions);
 
 		return result;
 	}
@@ -149,6 +172,7 @@ public class Bet implements Parcelable {
 		dest.writeLong(endDate);
 		dest.writeString(reward);
 		dest.writeList(participants);
+		dest.writeList(predictions);
 	}
 
 	public static final Parcelable.Creator<Bet> CREATOR
@@ -171,5 +195,6 @@ public class Bet implements Parcelable {
 		endDate = in.readLong();
 		reward = in.readString();
 		participants = in.readArrayList(String.class.getClassLoader());
+		predictions = in.readArrayList(String.class.getClassLoader());
 	}
 }

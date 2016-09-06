@@ -58,6 +58,11 @@ public class BetDetailsPresenter extends MvpBasePresenter<BetDetailsView> {
 		bet.setStartDate(bet.getStartDate());
 		bet.setEndDate(bet.getEndDate());
 
+		int indexOfPlayer = bet.getParticipants().indexOf(FirebaseAuth.getInstance().getCurrentUser().getUid());
+		if (indexOfPlayer >= 0 && getView().getPrediction() != null) {
+			bet.getPredictions().set(indexOfPlayer, getView().getPrediction());
+		}
+
 		model.updateDetails(bet, new BetDetailsModel.LoadDetailsListener() {
 			@Override
 			public void updateDetailsFailed() {

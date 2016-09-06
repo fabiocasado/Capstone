@@ -11,6 +11,7 @@ public interface BetDataView extends MvpView {
 	long getStartDate();
 	long getEndDate();
 	String getReward();
+	String getPrediction();
 
 	// displays start date
 	void showStartDate(String date);

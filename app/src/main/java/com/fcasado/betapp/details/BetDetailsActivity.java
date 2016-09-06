@@ -54,6 +54,8 @@ public class BetDetailsActivity extends MvpActivity<BetDetailsView, BetDetailsPr
 	EditText editTextReward;
 	@BindView(R.id.button_add_participants)
 	Button buttonAddParticipants;
+	@BindView(R.id.editText_prediction)
+	EditText editTextPrediction;
 	private DatePickerDialog startDatePicker;
 	private DatePickerDialog endDatePicker;
 
@@ -108,6 +110,7 @@ public class BetDetailsActivity extends MvpActivity<BetDetailsView, BetDetailsPr
 					List<User> selectedUsers = data.getParcelableArrayListExtra(FriendsActivity.EXTRA_SELECTION_RESULTS);
 					for (User user : selectedUsers) {
 						bet.getParticipants().add(user.getUid());
+						bet.getPredictions().add("");
 					}
 				}
 			}
@@ -167,6 +170,11 @@ public class BetDetailsActivity extends MvpActivity<BetDetailsView, BetDetailsPr
 		return editTextReward.getText().toString();
 	}
 
+	@Override
+	public String getPrediction() {
+		return editTextPrediction.getText().toString();
+	}
+
 	@OnClick(R.id.button_start_date)
 	public void onStartDatePressed() {
 		startDatePicker.show();
@@ -204,6 +212,8 @@ public class BetDetailsActivity extends MvpActivity<BetDetailsView, BetDetailsPr
 		editTextTitle.setText(bet.getTitle());
 		editTextDescription.setText(bet.getDescription());
 		editTextReward.setText(bet.getReward());
+		editTextPrediction.setText(bet.getPredictionForUser(FirebaseAuth.getInstance().getCurrentUser().getUid()));
+		editTextPrediction.setEnabled(editTextPrediction.getText().length() == 0);
 		buttonStartDate.setText(DateStringUtils.getDateString(bet.getStartDate()));
 		buttonEndDate.setText(DateStringUtils.getDateString(bet.getEndDate()));
 		initStartDatePicker();

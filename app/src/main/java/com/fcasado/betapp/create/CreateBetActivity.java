@@ -107,6 +107,10 @@ public class CreateBetActivity extends MvpActivity<CreateBetView, CreateBetPrese
 		return editTextReward.getText().toString();
 	}
 
+	@Override
+	public String getPrediction() {
+		return null;
+	}
 
 	@OnClick(R.id.button_start_date)
 	public void onStartDatePressed() {
