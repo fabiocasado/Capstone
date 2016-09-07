@@ -35,6 +35,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Logger;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
@@ -45,7 +46,7 @@ import butterknife.ButterKnife;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
-	private static final String TAG = "FacebookLogin";
+	private static final String TAG = "LoginActivity";
 	private FirebaseAuth mAuth;
 	private FirebaseAuth.AuthStateListener mAuthListener;
 	private CallbackManager mCallbackManager;
@@ -170,7 +171,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 							Toast.makeText(LoginActivity.this, "Authentication failed.",
 									Toast.LENGTH_SHORT).show();
 						} else {
-							saveUserDataToDatabase();
+							userLoggedIn();
 						}
 					}
 				});
@@ -210,6 +211,26 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 				break;
 
 		}
+	}
+
+	private void userLoggedIn() {
+		FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+		DatabaseReference database = FirebaseDatabase.getInstance().getReference().child(Constants.CHILD_USERS).child(currentUser.getUid());
+		database.addListenerForSingleValueEvent(new ValueEventListener() {
+			@Override
+			public void onDataChange(DataSnapshot dataSnapshot) {
+				// Register user if it doesn't exist
+				if (dataSnapshot == null || !dataSnapshot.exists()) {
+					LogUtils.d(TAG, "Registering user");
+					saveUserDataToDatabase();
+				}
+			}
+
+			@Override
+			public void onCancelled(DatabaseError databaseError) {
+				// Do nothing.
+			}
+		});
 	}
 
 	private void saveUserDataToDatabase() {

@@ -83,6 +83,11 @@ public class BetDetailsActivity extends MvpActivity<BetDetailsView, BetDetailsPr
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.bet_details_activity, menu);
+
+		MenuItem deleteMenuItem = menu.findItem(R.id.delete);
+		FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+		deleteMenuItem.setVisible(currentUser != null && currentUser.getUid().equalsIgnoreCase(bet.getAuthorId()));
+
 		return true;
 	}
 
