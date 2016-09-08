@@ -23,6 +23,7 @@ public class FriendsActivity extends MvpActivity<FriendsView, FriendsPresenter> 
 	private static final String TAG = "FriendsActivity";
 
 	protected FriendsAdapter adapter;
+
 	@BindView(R.id.recyclerView)
 	RecyclerView recyclerView;
 	@BindView(R.id.swiperefresh)
@@ -51,7 +52,6 @@ public class FriendsActivity extends MvpActivity<FriendsView, FriendsPresenter> 
 			}
 		});
 		loadFriends();
-		getPresenter().loadFriends();
 	}
 
 	protected boolean shouldAllowSelection() {
