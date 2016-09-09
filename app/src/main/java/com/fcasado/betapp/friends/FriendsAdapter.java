@@ -33,7 +33,7 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.FriendsH
 	private Set<User> selectedFriends;
 	private OnItemClickListener onItemClickListener;
 
-	public FriendsAdapter(final boolean isListSelectable) {
+	public FriendsAdapter(boolean isListSelectable) {
 		isSelectable = isListSelectable;
 		friends = new ArrayList<>();
 		selectedFriends = new HashSet<>();

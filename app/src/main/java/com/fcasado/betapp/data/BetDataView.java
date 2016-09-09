@@ -8,14 +8,6 @@ import com.hannesdorfmann.mosby.mvp.MvpView;
 public interface BetDataView extends MvpView {
 	String getBetTitle();
 	String getDescription();
-	long getStartDate();
-	long getEndDate();
 	String getReward();
 	String getPrediction();
-
-	// displays start date
-	void showStartDate(String date);
-
-	// displays end date
-	void showEndDate(String date);
 }

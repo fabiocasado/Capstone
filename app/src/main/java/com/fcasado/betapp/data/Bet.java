@@ -18,30 +18,29 @@ public class Bet implements Parcelable {
 	private String authorId;
 	private String title;
 	private String description;
-	private long startDate;
-	private long endDate;
 	private String reward;
 
 	private List<String> participants;
 
 	private List<String> predictions;
 
+	private List<String> winners;
+
 	public Bet() {
 
 	}
 
-	public Bet(String betId, String authorId, String title, String description, long startDate, long endDate, String reward) {
+	public Bet(String betId, String authorId, String title, String description, String reward) {
 		this.betId = betId;
 		this.authorId = authorId;
 		this.title = title;
 		this.description = description;
-		this.startDate = startDate;
-		this.endDate = endDate;
 		this.reward = reward;
 		participants = new ArrayList<>();
 		participants.add(authorId);
 		predictions = new ArrayList<>();
 		predictions.add("");
+		winners = new ArrayList<>();
 	}
 
 	@Override
@@ -51,11 +50,10 @@ public class Bet implements Parcelable {
 				", authorId='" + authorId + '\'' +
 				", title='" + title + '\'' +
 				", description='" + description + '\'' +
-				", startDate=" + startDate +
-				", endDate=" + endDate +
 				", reward='" + reward + '\'' +
 				", participants=" + participants +
 				", predictions=" + predictions +
+				", winners=" + winners +
 				'}';
 	}
 
@@ -91,22 +89,6 @@ public class Bet implements Parcelable {
 		this.description = description;
 	}
 
-	public long getStartDate() {
-		return startDate;
-	}
-
-	public void setStartDate(long startDate) {
-		this.startDate = startDate;
-	}
-
-	public long getEndDate() {
-		return endDate;
-	}
-
-	public void setEndDate(long endDate) {
-		this.endDate = endDate;
-	}
-
 	public String getReward() {
 		return reward;
 	}
@@ -131,6 +113,14 @@ public class Bet implements Parcelable {
 		this.predictions = predictions;
 	}
 
+	public List<String> getWinners() {
+		return winners;
+	}
+
+	public void setWinners(List<String> winners) {
+		this.winners = winners;
+	}
+
 	public String getPredictionForUser(String userId) {
 		int index = participants.indexOf(userId);
 		if (index >= 0) {
@@ -147,11 +137,10 @@ public class Bet implements Parcelable {
 		result.put("authorId", authorId);
 		result.put("title", title);
 		result.put("description", description);
-		result.put("startDate", startDate);
-		result.put("endDate", endDate);
 		result.put("reward", reward);
 		result.put("participants", participants);
 		result.put("predictions", predictions);
+		result.put("winners", winners);
 
 		return result;
 	}
@@ -168,11 +157,10 @@ public class Bet implements Parcelable {
 		dest.writeString(authorId);
 		dest.writeString(title);
 		dest.writeString(description);
-		dest.writeLong(startDate);
-		dest.writeLong(endDate);
 		dest.writeString(reward);
 		dest.writeList(participants);
 		dest.writeList(predictions);
+		dest.writeList(winners);
 	}
 
 	public static final Parcelable.Creator<Bet> CREATOR
@@ -191,10 +179,13 @@ public class Bet implements Parcelable {
 		authorId = in.readString();
 		title = in.readString();
 		description = in.readString();
-		startDate = in.readLong();
-		endDate = in.readLong();
 		reward = in.readString();
 		participants = in.readArrayList(String.class.getClassLoader());
 		predictions = in.readArrayList(String.class.getClassLoader());
+		winners = in.readArrayList(String.class.getClassLoader());
+	}
+
+	public boolean hasFinished() {
+		return winners != null && winners.size() > 0;
 	}
 }

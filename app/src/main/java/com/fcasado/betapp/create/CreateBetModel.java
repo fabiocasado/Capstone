@@ -24,12 +24,12 @@ public class CreateBetModel {
 		void createBetDone();
 	}
 
-	public void createBet(final String authorId, String title, String description, long startDate, long endDate, String reward, final CreateBetListener listener) {
+	public void createBet(final String authorId, String title, String description, String reward, final CreateBetListener listener) {
 		FirebaseDatabase database = FirebaseDatabase.getInstance();
 		DatabaseReference betsRef = database.getReference().child(Constants.CHILD_BETS);
 
 		final String betId = betsRef.push().getKey();
-		Bet bet = new Bet(betId, authorId, title, description, startDate, endDate, reward);
+		Bet bet = new Bet(betId, authorId, title, description, reward);
 
 		Map<String, Object> betValues = bet.toMap();
 		Map<String, Object> childUpdates = new HashMap<>();

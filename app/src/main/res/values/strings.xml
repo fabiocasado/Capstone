@@ -12,4 +12,5 @@
     <string name="save">Save</string>
     <string name="delete">Delete</string>
     <string name="prediction">Your Prediction</string>
+    <string name="declare_winners">Declare Winners</string>
 </resources>

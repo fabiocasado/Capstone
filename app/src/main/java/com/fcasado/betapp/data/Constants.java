@@ -9,4 +9,8 @@ public class Constants {
 	public static final String CHILD_BETS = "bets";
 	public static final String CHILD_FACEBOOK = "facebook";
 	public static final String CHILD_USER_ID = "uid";
+
+
+	public static final int REQUEST_CODE_SELECTION = 10001;
+	public static final int REQUEST_CODE_PARTICIPANTS = 10002;
 }

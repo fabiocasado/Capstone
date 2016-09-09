@@ -17,7 +17,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class FriendsActivity extends MvpActivity<FriendsView, FriendsPresenter> implements FriendsView, SwipeRefreshLayout.OnRefreshListener {
-	public static final int REQUEST_CODE_SELECTION = 10001;
 	public static final String EXTRA_CURRENT_BET = "extra_current_bet";
 	public static final String EXTRA_SELECTION_RESULTS = "extra_selection_results";
 	private static final String TAG = "FriendsActivity";

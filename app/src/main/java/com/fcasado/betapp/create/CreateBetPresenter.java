@@ -22,23 +22,7 @@ public class CreateBetPresenter extends MvpBasePresenter<CreateBetView> {
 		model = new CreateBetModel();
 	}
 
-	public void selectStartDate(int year, int monthOfYear, int dayOfMonth) {
-		if (isViewAttached()) {
-			GregorianCalendar calendar = new GregorianCalendar(year, monthOfYear, dayOfMonth);
-			DateFormat df = DateFormat.getDateInstance();
-			getView().showStartDate(df.format(calendar.getTime()));
-		}
-	}
-
-	public void selectEndDate(int year, int monthOfYear, int dayOfMonth) {
-		if (isViewAttached()) {
-			GregorianCalendar calendar = new GregorianCalendar(year, monthOfYear, dayOfMonth);
-			DateFormat df = DateFormat.getDateInstance();
-			getView().showEndDate(df.format(calendar.getTime()));
-		}
-	}
-
-	public void createDatePressed() {
+	public void createBetPressed() {
 		if (!validateBetData()) {
 			LogUtils.d(TAG, "Error validating bet");
 			if (isViewAttached()) {
@@ -50,8 +34,6 @@ public class CreateBetPresenter extends MvpBasePresenter<CreateBetView> {
 		model.createBet(FirebaseAuth.getInstance().getCurrentUser().getUid(),
 					getView().getBetTitle(),
 					getView().getDescription(),
-					getView().getStartDate(),
-					getView().getEndDate(),
 					getView().getReward(), new CreateBetModel.CreateBetListener() {
 						@Override
 						public void createBetFailed() {
@@ -73,7 +55,6 @@ public class CreateBetPresenter extends MvpBasePresenter<CreateBetView> {
 				&& isViewAttached()
 				&& !TextUtils.isEmpty(getView().getBetTitle())
 				&& !TextUtils.isEmpty(getView().getDescription())
-				&& getView().getStartDate() != Long.MIN_VALUE
 				&& !TextUtils.isEmpty(getView().getReward());
 	}
 }
