@@ -58,7 +58,7 @@ public class BetDetailsActivity extends MvpActivity<BetDetailsView, BetDetailsPr
 
 		bet = getIntent().getParcelableExtra(EXTRA_BET);
 		if (bet == null) {
-			Toast.makeText(this, "Bet data corrupted. Please refresh bet list.", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, R.string.bet_data_corrupted, Toast.LENGTH_SHORT).show();
 			finish();
 		} else {
 			showDetails();
@@ -75,6 +75,11 @@ public class BetDetailsActivity extends MvpActivity<BetDetailsView, BetDetailsPr
 		MenuItem deleteMenuItem = menu.findItem(R.id.delete);
 		FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 		deleteMenuItem.setVisible(currentUser != null && currentUser.getUid().equalsIgnoreCase(bet.getAuthorId()));
+
+		if (bet.hasFinished()) {
+			MenuItem saveMenuItem = menu.findItem(R.id.save);
+			saveMenuItem.setVisible(false);
+		}
 
 		return true;
 	}
@@ -106,6 +111,8 @@ public class BetDetailsActivity extends MvpActivity<BetDetailsView, BetDetailsPr
 							bet.getParticipants().add(user.getUid());
 							bet.getPredictions().add("");
 						}
+
+						getPresenter().updateDetails(bet);
 					}
 				}
 				break;
@@ -147,18 +154,18 @@ public class BetDetailsActivity extends MvpActivity<BetDetailsView, BetDetailsPr
 
 	@Override
 	public void showBetDeleted() {
-		Toast.makeText(this, "Bet deleted", Toast.LENGTH_SHORT).show();
+		Toast.makeText(this, R.string.bet_deleted, Toast.LENGTH_SHORT).show();
 		finish();
 	}
 
 	@Override
 	public void showDeleteFailed() {
-		Toast.makeText(this, "Bet deletion failed. Please try again.", Toast.LENGTH_SHORT).show();
+		Toast.makeText(this, R.string.bet_deletion_failed, Toast.LENGTH_SHORT).show();
 	}
 
 	@Override
 	public void showUpdatedDetails(Bet bet) {
-		Toast.makeText(this, "Bet updated", Toast.LENGTH_SHORT).show();
+		Toast.makeText(this, R.string.bet_updated, Toast.LENGTH_SHORT).show();
 		this.bet = bet;
 		showDetails();
 		setEditionEnabledStatus();
@@ -166,7 +173,7 @@ public class BetDetailsActivity extends MvpActivity<BetDetailsView, BetDetailsPr
 
 	@Override
 	public void showUpdateFailed() {
-		Toast.makeText(this, "Update failed. Please check your data and try again.", Toast.LENGTH_SHORT).show();
+		Toast.makeText(this, R.string.bet_update_failed, Toast.LENGTH_SHORT).show();
 	}
 
 	public void showDetails() {

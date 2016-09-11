@@ -117,7 +117,7 @@ public class BetParticipantsActivity extends MvpActivity<ParticipantsView, Parti
 	@Override
 	public void showLoadParticipantsFailed() {
 		adapter.clearPredictions();
-		Toast.makeText(this, "Error loading participants", Toast.LENGTH_SHORT).show();
+		Toast.makeText(this, R.string.load_participants_failed, Toast.LENGTH_SHORT).show();
 	}
 
 	@Override

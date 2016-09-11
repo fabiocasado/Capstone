@@ -5,6 +5,8 @@ import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fcasado.betapp.R;
@@ -27,6 +29,8 @@ public class FriendsActivity extends MvpActivity<FriendsView, FriendsPresenter> 
 	RecyclerView recyclerView;
 	@BindView(R.id.swiperefresh)
 	SwipeRefreshLayout swipeRefreshLayout;
+	@BindView(R.id.textView_empty)
+	TextView emptyTextView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -72,12 +76,14 @@ public class FriendsActivity extends MvpActivity<FriendsView, FriendsPresenter> 
 	public void showFriends(List<User> friends) {
 		adapter.setFriends(friends);
 		swipeRefreshLayout.setRefreshing(false);
+
+		emptyTextView.setVisibility(friends.size() == 0 ? View.VISIBLE : View.GONE);
 	}
 
 	@Override
 	public void showLoadFriendsFailed() {
 		adapter.clearFriends();
-		Toast.makeText(this, "Error loading friends", Toast.LENGTH_SHORT).show();
+		Toast.makeText(this, R.string.load_friends_failed, Toast.LENGTH_SHORT).show();
 	}
 
 	@Override

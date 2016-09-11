@@ -23,6 +23,11 @@
         <item name="android:inputType">textCapSentences</item>
     </style>
 
+    <style name="Input.Body.Multiline" parent="Input.Body">
+        <item name="android:inputType">textMultiLine|textCapSentences</item>
+        <item name="android:maxLines">@integer/input_max_lines</item>
+    </style>
+
     <style name="Text.Small" parent="TextAppearance.AppCompat.Small">
     </style>
 

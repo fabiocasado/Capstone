@@ -20,6 +20,8 @@
             style="@style/Text.Large"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:maxLines="@integer/input_single_line"
+            android:ellipsize="end"
             tools:text="Bet # 1"/>
 
         <TextView
@@ -27,6 +29,8 @@
             style="@style/Text.Medium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:maxLines="@integer/input_max_lines_list_item"
+            android:ellipsize="end"
             tools:text="Description for Bet # 1 that will explain what it is about"/>
     </LinearLayout>
 

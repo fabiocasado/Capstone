@@ -32,19 +32,17 @@
 
             <EditText
                 android:id="@+id/editText_description"
-                style="@style/Input.Body"
+                style="@style/Input.Body.Multiline"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/description"
-                android:maxLines="@integer/input_max_lines"/>
+                android:hint="@string/description"/>
 
             <EditText
                 android:id="@+id/editText_reward"
-                style="@style/Input.Body"
+                style="@style/Input.Body.Multiline"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/reward"
-                android:maxLines="@integer/input_max_lines"/>
+                android:hint="@string/reward"/>
 
             <Button
                 android:id="@+id/button_create"

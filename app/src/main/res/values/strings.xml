@@ -14,4 +14,13 @@
     <string name="delete">Delete</string>
     <string name="prediction">Your Prediction</string>
     <string name="declare_winners">Declare Winners</string>
+    <string name="empty_friend_list">No available friends found</string>
+    <string name="bet_deleted">Bet deleted</string>
+    <string name="bet_deletion_failed">Bet deletion failed. Please try again.</string>
+    <string name="bet_updated">Bet updated</string>
+    <string name="bet_update_failed">Update failed. Please check your data and try again.</string>
+    <string name="bet_data_corrupted">Bet data corrupted. Please refresh bet list.</string>
+    <string name="load_friends_failed">Error loading friends</string>
+    <string name="load_participants_failed">Error loading participants</string>
+    <string name="auth_failed">Authentication failed.</string>
 </resources>

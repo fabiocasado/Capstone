@@ -168,7 +168,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 						// signed in user can be handled in the listener.
 						if (!task.isSuccessful()) {
 							LogUtils.w(TAG, "signInWithCredential", task.getException());
-							Toast.makeText(LoginActivity.this, "Authentication failed.",
+							Toast.makeText(LoginActivity.this, R.string.auth_failed,
 									Toast.LENGTH_SHORT).show();
 						} else {
 							userLoggedIn();
