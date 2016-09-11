@@ -22,28 +22,43 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/editText_title"
-                style="@style/Input.Title"
+            <TextView
+                style="@style/Text.Label.Small"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/title"
+                android:text="@string/title"/>
+
+            <TextView
+                android:id="@+id/textView_title"
+                style="@style/Text.Large"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:maxLines="@integer/input_single_line"/>
 
-            <EditText
-                android:id="@+id/editText_description"
-                style="@style/Input.Body"
+            <TextView
+                style="@style/Text.Label.Small"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/description"
+                android:text="@string/description"/>
+
+            <TextView
+                android:id="@+id/textView_description"
+                style="@style/Text.Medium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:maxLines="@integer/input_max_lines"/>
 
-            <EditText
-                android:id="@+id/editText_reward"
-                style="@style/Input.Body"
+            <TextView
+                style="@style/Text.Label.Small"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/reward"
+                android:text="@string/reward"/>
+
+            <TextView
+                android:id="@+id/textView_reward"
+                style="@style/Text.Medium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:maxLines="@integer/input_max_lines"/>
 
             <LinearLayout

@@ -1,6 +1,5 @@
 package com.fcasado.betapp.details;
 
-import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,11 +8,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.fcasado.betapp.DateStringUtils;
 import com.fcasado.betapp.R;
 import com.fcasado.betapp.data.Bet;
 import com.fcasado.betapp.data.Constants;
@@ -25,9 +23,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.hannesdorfmann.mosby.mvp.MvpActivity;
 
-import java.text.DateFormat;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 import butterknife.BindView;
@@ -42,12 +37,12 @@ public class BetDetailsActivity extends MvpActivity<BetDetailsView, BetDetailsPr
 	public static final String EXTRA_BET_ID = "extra_bet_id";
 	private static final String TAG = "BetsListActivity";
 
-	@BindView(R.id.editText_title)
-	EditText editTextTitle;
-	@BindView(R.id.editText_description)
-	EditText editTextDescription;
-	@BindView(R.id.editText_reward)
-	EditText editTextReward;
+	@BindView(R.id.textView_title)
+	TextView textViewTitle;
+	@BindView(R.id.textView_description)
+	TextView textViewDescription;
+	@BindView(R.id.textView_reward)
+	TextView textViewReward;
 	@BindView(R.id.button_add_participants)
 	Button buttonAddParticipants;
 	@BindView(R.id.editText_prediction)
@@ -132,17 +127,17 @@ public class BetDetailsActivity extends MvpActivity<BetDetailsView, BetDetailsPr
 
 	@Override
 	public String getBetTitle() {
-		return editTextTitle.getText().toString();
+		return textViewTitle.getText().toString();
 	}
 
 	@Override
 	public String getDescription() {
-		return editTextDescription.getText().toString();
+		return textViewDescription.getText().toString();
 	}
 
 	@Override
 	public String getReward() {
-		return editTextReward.getText().toString();
+		return textViewReward.getText().toString();
 	}
 
 	@Override
@@ -175,9 +170,9 @@ public class BetDetailsActivity extends MvpActivity<BetDetailsView, BetDetailsPr
 	}
 
 	public void showDetails() {
-		editTextTitle.setText(bet.getTitle());
-		editTextDescription.setText(bet.getDescription());
-		editTextReward.setText(bet.getReward());
+		textViewTitle.setText(bet.getTitle());
+		textViewDescription.setText(bet.getDescription());
+		textViewReward.setText(bet.getReward());
 		editTextPrediction.setText(bet.getPredictionForUser(FirebaseAuth.getInstance().getCurrentUser().getUid()));
 		editTextPrediction.setEnabled(editTextPrediction.getText().length() == 0 && !bet.hasFinished());
 	}
@@ -201,9 +196,6 @@ public class BetDetailsActivity extends MvpActivity<BetDetailsView, BetDetailsPr
 	private void setEditionEnabledStatus() {
 		FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 		boolean isEnabled = !bet.hasFinished() && currentUser != null && currentUser.getUid().equalsIgnoreCase(bet.getAuthorId());
-		editTextTitle.setEnabled(isEnabled);
-		editTextDescription.setEnabled(isEnabled);
-		editTextReward.setEnabled(isEnabled);
 		buttonAddParticipants.setVisibility(isEnabled ? View.VISIBLE : View.GONE);
 	}
 }

@@ -36,10 +36,6 @@ public class BetDetailsPresenter extends MvpBasePresenter<BetDetailsView> {
 			return;
 		}
 
-		bet.setTitle(getView().getBetTitle());
-		bet.setDescription(getView().getDescription());
-		bet.setReward(getView().getReward());
-
 		int indexOfPlayer = bet.getParticipants().indexOf(FirebaseAuth.getInstance().getCurrentUser().getUid());
 		if (indexOfPlayer >= 0 && getView().getPrediction() != null) {
 			bet.getPredictions().set(indexOfPlayer, getView().getPrediction());
@@ -83,9 +79,6 @@ public class BetDetailsPresenter extends MvpBasePresenter<BetDetailsView> {
 	private boolean validateBetData() {
 		return FirebaseAuth.getInstance().getCurrentUser() != null
 				&& FirebaseAuth.getInstance().getCurrentUser().getUid() != null
-				&& isViewAttached()
-				&& !TextUtils.isEmpty(getView().getBetTitle())
-				&& !TextUtils.isEmpty(getView().getDescription())
-				&& !TextUtils.isEmpty(getView().getReward());
+				&& isViewAttached();
 	}
 }

@@ -31,4 +31,8 @@
 
     <style name="Text.Large" parent="TextAppearance.AppCompat.Large">
     </style>
+
+    <style name="Text.Label.Small" parent="Text.Small">
+        <item name="android:textColor">@color/labelTextColor</item>
+    </style>
 </resources>
