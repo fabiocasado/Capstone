@@ -38,6 +38,13 @@
         </activity>
         <activity android:name=".friends.AddParticipantsActivity">
         </activity>
+
+        <provider
+            android:name=".favorites.FavoriteBetProvider"
+            android:authorities="com.fcasado.betapp"
+            android:enabled="true"
+            android:exported="false">
+        </provider>
     </application>
 
 </manifest>

@@ -1,6 +1,8 @@
 package com.fcasado.betapp.details;
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.Menu;
@@ -17,6 +19,7 @@ import com.fcasado.betapp.R;
 import com.fcasado.betapp.data.Bet;
 import com.fcasado.betapp.data.Constants;
 import com.fcasado.betapp.data.User;
+import com.fcasado.betapp.favorites.FavoriteBetContract;
 import com.fcasado.betapp.friends.AddParticipantsActivity;
 import com.fcasado.betapp.participants.BetParticipantsActivity;
 import com.fcasado.betapp.friends.FriendsActivity;
@@ -50,6 +53,7 @@ public class BetDetailsActivity extends MvpActivity<BetDetailsView, BetDetailsPr
 	EditText editTextPrediction;
 
 	private Bet bet;
+	private boolean isFavorite;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -67,6 +71,7 @@ public class BetDetailsActivity extends MvpActivity<BetDetailsView, BetDetailsPr
 			showDetails();
 		}
 
+		setFavoriteStatus();
 		setEditionEnabledStatus();
 	}
 
@@ -84,6 +89,11 @@ public class BetDetailsActivity extends MvpActivity<BetDetailsView, BetDetailsPr
 			saveMenuItem.setVisible(false);
 		}
 
+		MenuItem favoriteMenuItem = menu.findItem(R.id.favorite);
+		if (isFavorite) {
+			favoriteMenuItem.setIcon(R.drawable.ic_star_white);
+		}
+
 		return true;
 	}
 
@@ -92,6 +102,26 @@ public class BetDetailsActivity extends MvpActivity<BetDetailsView, BetDetailsPr
 		switch (item.getItemId()) {
 			case R.id.save:
 				getPresenter().updateDetails(bet);
+				return true;
+			case R.id.favorite:
+				if (!isFavorite) {
+					ContentValues values = new ContentValues();
+					values.put(FavoriteBetContract.BetEntry.COLUMN_BET_ID, bet.getBetId());
+					values.put(FavoriteBetContract.BetEntry.COLUMN_BET_TITLE, bet.getTitle());
+					values.put(FavoriteBetContract.BetEntry.COLUMN_BET_DESCRIPTION, bet.getDescription());
+					values.put(FavoriteBetContract.BetEntry.COLUMN_BET_HAS_FINISHED, bet.hasFinished());
+					getContentResolver().insert(
+							FavoriteBetContract.BetEntry.CONTENT_URI,
+							values);
+				} else {
+					getContentResolver().delete(
+							FavoriteBetContract.BetEntry.CONTENT_URI,
+							FavoriteBetContract.BetEntry.COLUMN_BET_ID + " = ?",
+							new String[] {bet.getBetId()});
+				}
+
+				isFavorite = !isFavorite;
+				item.setIcon(isFavorite ? R.drawable.ic_star_white : R.drawable.ic_star_border_white);
 				return true;
 			case R.id.delete:
 				getPresenter().deleteBet(bet);
@@ -201,6 +231,24 @@ public class BetDetailsActivity extends MvpActivity<BetDetailsView, BetDetailsPr
 		Intent intent = new Intent(this, BetParticipantsActivity.class);
 		intent.putExtra(FriendsActivity.EXTRA_CURRENT_BET, bet);
 		startActivityForResult(intent, Constants.REQUEST_CODE_PARTICIPANTS);
+	}
+
+	private void setFavoriteStatus() {
+		Cursor cursor = getContentResolver().query(
+				FavoriteBetContract.BetEntry.CONTENT_URI,
+				null,
+				null,
+				null,
+				null);
+		int columnIndex = cursor.getColumnIndex(FavoriteBetContract.BetEntry.COLUMN_BET_ID);
+		while (cursor.moveToNext()) {
+			if (cursor.getString(columnIndex).equalsIgnoreCase(bet.getBetId())) {
+				isFavorite = true;
+				break;
+			}
+		}
+
+		cursor.close();
 	}
 
 	private void setEditionEnabledStatus() {

@@ -1,7 +1,11 @@
 package com.fcasado.betapp.bets;
 
+import android.content.Context;
+import android.database.Cursor;
+
 import com.fcasado.betapp.data.Bet;
 import com.fcasado.betapp.data.Constants;
+import com.fcasado.betapp.favorites.FavoriteBetContract;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -72,5 +76,23 @@ public class BetsListModel {
 						listener.betsLoadFailed();
 					}
 				});
+	}
+
+	public List<String> loadFavoriteBets(Context context) {
+		List<String> favorteBetIds = new ArrayList<>();
+
+		Cursor cursor = context.getContentResolver().query(
+				FavoriteBetContract.BetEntry.CONTENT_URI,
+				null,
+				null,
+				null,
+				null);
+		int columnIndex = cursor.getColumnIndex(FavoriteBetContract.BetEntry.COLUMN_BET_ID);
+		while (cursor.moveToNext()) {
+			favorteBetIds.add(cursor.getString(columnIndex));
+		}
+
+		cursor.close();
+		return favorteBetIds;
 	}
 }

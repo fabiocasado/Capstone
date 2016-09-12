@@ -15,14 +15,30 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/textView_title"
-            style="@style/Text.Large"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:maxLines="@integer/input_single_line"
-            android:ellipsize="end"
-            tools:text="Bet # 1"/>
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView_title"
+                style="@style/Text.Large"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:maxLines="@integer/input_single_line"
+                android:ellipsize="end"
+                tools:text="Bet # 1"/>
+
+            <ImageView
+                android:id="@+id/imageView_favorite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_star_white"
+                android:visibility="gone"
+                android:tint="@color/colorAccent"/>
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/textView_description"

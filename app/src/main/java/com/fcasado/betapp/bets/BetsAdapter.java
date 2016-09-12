@@ -1,10 +1,13 @@
 package com.fcasado.betapp.bets;
 
+import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.fcasado.betapp.R;
@@ -25,6 +28,7 @@ public class BetsAdapter extends RecyclerView.Adapter<BetsAdapter.ViewHolder> {
 	}
 
 	private List<Bet> bets;
+	private List<String> favoriteBetIds;
 	private OnItemClickListener onItemClickListener;
 
 	public BetsAdapter(OnItemClickListener onItemClickListener) {
@@ -42,6 +46,11 @@ public class BetsAdapter extends RecyclerView.Adapter<BetsAdapter.ViewHolder> {
 		notifyDataSetChanged();
 	}
 
+	public void setFavoriteBets(List<String> favoriteBetIds) {
+		this.favoriteBetIds = favoriteBetIds;
+		notifyDataSetChanged();
+	}
+
 	@Override
 	public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 		return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_bet_item, parent, false));
@@ -50,7 +59,8 @@ public class BetsAdapter extends RecyclerView.Adapter<BetsAdapter.ViewHolder> {
 	@Override
 	public void onBindViewHolder(ViewHolder holder, int position) {
 		if (bets.size() > position) {
-			holder.bind(bets.get(position), onItemClickListener);
+			boolean isFavorite = favoriteBetIds != null && favoriteBetIds.contains(bets.get(position).getBetId());
+			holder.bind(bets.get(position), onItemClickListener, isFavorite);
 		}
 	}
 
@@ -64,15 +74,18 @@ public class BetsAdapter extends RecyclerView.Adapter<BetsAdapter.ViewHolder> {
 		TextView title;
 		@BindView(R.id.textView_description)
 		TextView description;
+		@BindView(R.id.imageView_favorite)
+		ImageView favorite;
 
 		public ViewHolder(View itemView) {
 			super(itemView);
 			ButterKnife.bind(this, itemView);
 		}
 
-		public void bind(final Bet bet, final OnItemClickListener listener) {
+		public void bind(final Bet bet, final OnItemClickListener listener, boolean isFavoriteBet) {
 			title.setText(bet.getTitle());
 			description.setText(bet.getDescription());
+			favorite.setVisibility(isFavoriteBet ? View.VISIBLE : View.GONE);
 			itemView.setOnClickListener(new View.OnClickListener() {
 				@Override public void onClick(View v) {
 					listener.onItemClick(bet);

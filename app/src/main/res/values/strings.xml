@@ -11,6 +11,7 @@
     <string name="add_participants">Add Participants</string>
     <string name="edit">Edit</string>
     <string name="save">Save</string>
+    <string name="favorite">Favorite</string>
     <string name="delete">Delete</string>
     <string name="prediction">Your Prediction</string>
     <string name="declare_winners">Declare Winners</string>

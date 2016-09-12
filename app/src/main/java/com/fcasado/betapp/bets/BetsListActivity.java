@@ -1,6 +1,7 @@
 package com.fcasado.betapp.bets;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -14,6 +15,7 @@ import com.fcasado.betapp.LogUtils;
 import com.fcasado.betapp.R;
 import com.fcasado.betapp.data.Bet;
 import com.fcasado.betapp.details.BetDetailsActivity;
+import com.fcasado.betapp.favorites.FavoriteBetContract;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.hannesdorfmann.mosby.mvp.MvpActivity;
 
@@ -77,6 +79,7 @@ public class BetsListActivity extends MvpActivity<BetsListView, BetsListPresente
 	@Override
 	public void showBets(List<Bet> betList) {
 		adapter.setBets(betList);
+		adapter.setFavoriteBets(getPresenter().loadFavoriteBets(this));
 		swipeRefreshLayout.setRefreshing(false);
 	}
 
