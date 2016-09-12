@@ -1,10 +1,12 @@
 package com.fcasado.betapp.friends;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import com.fcasado.betapp.FirebaseUtils;
 import com.fcasado.betapp.R;
 import com.fcasado.betapp.data.Bet;
 import com.fcasado.betapp.data.User;
@@ -16,6 +18,13 @@ public class AddParticipantsActivity extends FriendsActivity {
 	private static final String TAG = "AddParticipantsActivity";
 
 	private MenuItem saveMenuItem;
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+
+		FirebaseUtils.logEvent(this, FirebaseUtils.PARTICIPANTS_ADD_ACTIVITY, null);
+	}
 
 	@Override
 	protected boolean shouldAllowSelection() {

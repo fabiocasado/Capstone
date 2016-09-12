@@ -12,6 +12,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.fcasado.betapp.FirebaseUtils;
 import com.fcasado.betapp.R;
 import com.fcasado.betapp.data.Bet;
 import com.fcasado.betapp.data.User;
@@ -46,6 +47,8 @@ public class BetParticipantsActivity extends MvpActivity<ParticipantsView, Parti
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_friends);
 		ButterKnife.bind(this);
+
+		FirebaseUtils.logEvent(this, FirebaseUtils.PARTICIPANTS_SHOW_ACTIVITY, null);
 
 		if (bet == null && getIntent().hasExtra(EXTRA_CURRENT_BET)) {
 			bet = getIntent().getParcelableExtra(EXTRA_CURRENT_BET);

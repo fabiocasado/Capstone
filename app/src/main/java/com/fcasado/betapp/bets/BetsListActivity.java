@@ -9,10 +9,12 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.BaseAdapter;
 import android.widget.Toast;
 
+import com.fcasado.betapp.FirebaseUtils;
 import com.fcasado.betapp.LogUtils;
 import com.fcasado.betapp.R;
 import com.fcasado.betapp.data.Bet;
 import com.fcasado.betapp.details.BetDetailsActivity;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.hannesdorfmann.mosby.mvp.MvpActivity;
 
 import java.util.List;
@@ -39,6 +41,8 @@ public class BetsListActivity extends MvpActivity<BetsListView, BetsListPresente
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_bets_list);
 		ButterKnife.bind(this);
+
+		FirebaseUtils.logEvent(this, FirebaseUtils.BET_LISTS_ACTIVITY, null);
 
 		adapter = new BetsAdapter(this);
 		recyclerView.setLayoutManager(new LinearLayoutManager(this));

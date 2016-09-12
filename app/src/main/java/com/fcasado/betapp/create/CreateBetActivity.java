@@ -6,6 +6,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.fcasado.betapp.FirebaseUtils;
 import com.fcasado.betapp.R;
 import com.hannesdorfmann.mosby.mvp.MvpActivity;
 
@@ -29,6 +30,8 @@ public class CreateBetActivity extends MvpActivity<CreateBetView, CreateBetPrese
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_create_bet);
 		ButterKnife.bind(this);
+
+		FirebaseUtils.logEvent(this, FirebaseUtils.BET_CREATE_ACTIVITY, null);
 	}
 
 	@NonNull

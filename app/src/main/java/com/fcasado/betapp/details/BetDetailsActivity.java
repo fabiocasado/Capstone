@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.fcasado.betapp.FirebaseUtils;
 import com.fcasado.betapp.R;
 import com.fcasado.betapp.data.Bet;
 import com.fcasado.betapp.data.Constants;
@@ -55,6 +56,8 @@ public class BetDetailsActivity extends MvpActivity<BetDetailsView, BetDetailsPr
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_bet_details);
 		ButterKnife.bind(this);
+
+		FirebaseUtils.logEvent(this, FirebaseUtils.BET_DETAILS_ACTIVITY, null);
 
 		bet = getIntent().getParcelableExtra(EXTRA_BET);
 		if (bet == null) {
