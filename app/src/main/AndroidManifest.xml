@@ -43,8 +43,22 @@
             android:name=".favorites.FavoriteBetProvider"
             android:authorities="com.fcasado.betapp"
             android:enabled="true"
-            android:exported="false">
+            android:exported="true">
         </provider>
+
+        <receiver android:name=".FavoriteBetsWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/favorite_bets_widget_info"/>
+        </receiver>
+
+        <service
+            android:name=".FavoriteBetsService"
+            android:permission="android.permission.BIND_REMOTEVIEWS"/>
     </application>
 
 </manifest>

@@ -1,0 +1,18 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#09C"
+                android:padding="@dimen/widget_margin">
+
+    <TextView
+        android:id="@+id/textView_empty_favorite_bets"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/empty_favorite_bets_list"/>
+
+    <ListView
+        android:id="@+id/listView_favorite_bets"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</FrameLayout>

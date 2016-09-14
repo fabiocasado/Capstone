@@ -16,6 +16,7 @@
     <string name="prediction">Your Prediction</string>
     <string name="declare_winners">Declare Winners</string>
     <string name="empty_friend_list">No available friends found</string>
+    <string name="empty_favorite_bets_list">No bets marked as favorite</string>
     <string name="bet_deleted">Bet deleted</string>
     <string name="bet_deletion_failed">Bet deletion failed. Please try again.</string>
     <string name="bet_updated">Bet updated</string>
@@ -24,4 +25,5 @@
     <string name="load_friends_failed">Error loading friends</string>
     <string name="load_participants_failed">Error loading participants</string>
     <string name="auth_failed">Authentication failed.</string>
+    <string name="add_widget">Add widget</string>
 </resources>
