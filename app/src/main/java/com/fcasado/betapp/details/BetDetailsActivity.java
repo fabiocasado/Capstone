@@ -16,7 +16,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.fcasado.betapp.FavoriteBetsWidget;
+import com.fcasado.betapp.FavoriteBetsWidgetProvider;
 import com.fcasado.betapp.FirebaseUtils;
 import com.fcasado.betapp.R;
 import com.fcasado.betapp.data.Bet;
@@ -127,7 +127,7 @@ public class BetDetailsActivity extends MvpActivity<BetDetailsView, BetDetailsPr
 				item.setIcon(isFavorite ? R.drawable.ic_star_white : R.drawable.ic_star_border_white);
 
 				// Update app widget data
-				int ids[] = AppWidgetManager.getInstance(this).getAppWidgetIds(new ComponentName(getApplication(), FavoriteBetsWidget.class));
+				int ids[] = AppWidgetManager.getInstance(this).getAppWidgetIds(new ComponentName(getApplication(), FavoriteBetsWidgetProvider.class));
 				AppWidgetManager.getInstance(this).notifyAppWidgetViewDataChanged(ids, R.id.listView_favorite_bets);
 				return true;
 			case R.id.delete:

@@ -1,7 +1,9 @@
 package com.fcasado.betapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
+import android.os.Bundle;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
@@ -70,12 +72,19 @@ public class FavoriteBetsFactory implements RemoteViewsService.RemoteViewsFactor
 	}
 
 	@Override
-	public RemoteViews getViewAt(int i) {
-		cursor.moveToPosition(i);
+	public RemoteViews getViewAt(int position) {
+		cursor.moveToPosition(position);
 
 		RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.layout_widget_item);
 		rv.setTextViewText(R.id.textView_title, cursor.getString(columnTitle));
 		rv.setTextViewText(R.id.textView_description, cursor.getString(columnDescription));
+
+		Bundle extras = new Bundle();
+		extras.putInt(FavoriteBetsWidgetProvider.EXTRA_BET_ID, position);
+		Intent fillInIntent = new Intent();
+		fillInIntent.putExtras(extras);
+
+		rv.setOnClickFillInIntent(R.id.widget_item, fillInIntent);
 
 		return rv;
 	}

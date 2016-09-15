@@ -1,8 +1,8 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="#09C"
-                android:padding="@dimen/widget_margin">
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:background="@color/widget_background"
+             android:padding="@dimen/widget_margin">
 
     <TextView
         android:id="@+id/textView_empty_favorite_bets"
@@ -13,6 +13,8 @@
     <ListView
         android:id="@+id/listView_favorite_bets"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:divider="@null"
+        android:dividerHeight="0dp"/>
 
 </FrameLayout>

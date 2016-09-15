@@ -5,4 +5,5 @@
     <color name="colorAccent">#FF4081</color>
 
     <color name="labelTextColor">@android:color/darker_gray</color>
+    <color name="widget_background">@android:color/background_light</color>
 </resources>
