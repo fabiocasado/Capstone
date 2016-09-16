@@ -2,7 +2,7 @@ package com.fcasado.betapp.details;
 
 import android.support.annotation.NonNull;
 
-import com.fcasado.betapp.LogUtils;
+import com.fcasado.betapp.utils.LogUtils;
 import com.fcasado.betapp.data.Bet;
 import com.google.firebase.auth.FirebaseAuth;
 import com.hannesdorfmann.mosby.mvp.MvpBasePresenter;

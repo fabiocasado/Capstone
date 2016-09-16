@@ -2,13 +2,9 @@ package com.fcasado.betapp.create;
 
 import android.text.TextUtils;
 
-import com.fcasado.betapp.LogUtils;
+import com.fcasado.betapp.utils.LogUtils;
 import com.google.firebase.auth.FirebaseAuth;
 import com.hannesdorfmann.mosby.mvp.MvpBasePresenter;
-
-import java.text.DateFormat;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 /**
  * Created by fcasado on 6/14/16.

@@ -1,7 +1,7 @@
 package com.fcasado.betapp.details;
 
 import com.fcasado.betapp.data.Bet;
-import com.fcasado.betapp.data.Constants;
+import com.fcasado.betapp.utils.Constants;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;

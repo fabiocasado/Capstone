@@ -6,9 +6,12 @@
 
     <TextView
         android:id="@+id/textView_empty_favorite_bets"
+        style="@style/Text.Medium"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/empty_favorite_bets_list"/>
+        android:text="@string/empty_favorite_bets_list"
+        android:textColor="@android:color/primary_text_light"
+        android:layout_margin="@dimen/container_horizontal_margin"/>
 
     <ListView
         android:id="@+id/listView_favorite_bets"

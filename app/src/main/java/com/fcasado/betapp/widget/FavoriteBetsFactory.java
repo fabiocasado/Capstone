@@ -1,4 +1,4 @@
-package com.fcasado.betapp;
+package com.fcasado.betapp.widget;
 
 import android.content.Context;
 import android.content.Intent;
@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
+import com.fcasado.betapp.R;
 import com.fcasado.betapp.favorites.FavoriteBetContract;
 
 /**

@@ -1,6 +1,8 @@
-package com.fcasado.betapp;
+package com.fcasado.betapp.utils;
 
 import android.util.Log;
+
+import com.fcasado.betapp.BuildConfig;
 
 /**
  * Created by fcasado on 6/5/16.

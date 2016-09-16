@@ -1,5 +1,8 @@
 package com.fcasado.betapp;
 
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
+import android.content.ContentProvider;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -20,12 +23,15 @@ import com.facebook.share.model.AppInviteContent;
 import com.facebook.share.widget.AppInviteDialog;
 import com.fcasado.betapp.bets.BetsListActivity;
 import com.fcasado.betapp.create.CreateBetActivity;
-import com.fcasado.betapp.data.Constants;
+import com.fcasado.betapp.favorites.FavoriteBetContract;
+import com.fcasado.betapp.utils.Constants;
 import com.fcasado.betapp.data.User;
 import com.fcasado.betapp.friends.FriendsActivity;
+import com.fcasado.betapp.utils.FirebaseUtils;
+import com.fcasado.betapp.utils.LogUtils;
+import com.fcasado.betapp.widget.FavoriteBetsWidgetProvider;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
@@ -179,6 +185,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 	}
 
 	private void updateUI(FirebaseUser user) {
+		if (user == null) {
+			// User logged out
+			getContentResolver().delete(FavoriteBetContract.BetEntry.CONTENT_URI, null, null);
+
+			// Update app widget data
+			int ids[] = AppWidgetManager.getInstance(this).getAppWidgetIds(new ComponentName(getApplication(), FavoriteBetsWidgetProvider.class));
+			AppWidgetManager.getInstance(this).notifyAppWidgetViewDataChanged(ids, R.id.listView_favorite_bets);
+		}
 		findViewById(R.id.button_invite_friends).setVisibility(user != null ? View.VISIBLE : View.GONE);
 	}
 

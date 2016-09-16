@@ -4,7 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 
 import com.fcasado.betapp.data.Bet;
-import com.fcasado.betapp.data.Constants;
+import com.fcasado.betapp.utils.Constants;
 import com.fcasado.betapp.favorites.FavoriteBetContract;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;

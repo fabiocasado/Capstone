@@ -1,4 +1,4 @@
-package com.fcasado.betapp.data;
+package com.fcasado.betapp.utils;
 
 /**
  * Created by fcasado on 6/25/16.

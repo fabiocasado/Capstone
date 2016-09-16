@@ -1,8 +1,8 @@
 package com.fcasado.betapp.create;
 
-import com.fcasado.betapp.LogUtils;
+import com.fcasado.betapp.utils.LogUtils;
 import com.fcasado.betapp.data.Bet;
-import com.fcasado.betapp.data.Constants;
+import com.fcasado.betapp.utils.Constants;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;

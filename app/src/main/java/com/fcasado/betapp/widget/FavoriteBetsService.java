@@ -1,4 +1,4 @@
-package com.fcasado.betapp;
+package com.fcasado.betapp.widget;
 
 import android.content.Intent;
 import android.widget.RemoteViewsService;

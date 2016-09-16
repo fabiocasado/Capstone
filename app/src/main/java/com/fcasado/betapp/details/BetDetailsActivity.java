@@ -16,11 +16,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.fcasado.betapp.FavoriteBetsWidgetProvider;
-import com.fcasado.betapp.FirebaseUtils;
+import com.fcasado.betapp.widget.FavoriteBetsWidgetProvider;
+import com.fcasado.betapp.utils.FirebaseUtils;
 import com.fcasado.betapp.R;
 import com.fcasado.betapp.data.Bet;
-import com.fcasado.betapp.data.Constants;
+import com.fcasado.betapp.utils.Constants;
 import com.fcasado.betapp.data.User;
 import com.fcasado.betapp.favorites.FavoriteBetContract;
 import com.fcasado.betapp.friends.AddParticipantsActivity;

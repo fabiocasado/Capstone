@@ -2,11 +2,10 @@ package com.fcasado.betapp.create;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.fcasado.betapp.FirebaseUtils;
+import com.fcasado.betapp.utils.FirebaseUtils;
 import com.fcasado.betapp.R;
 import com.hannesdorfmann.mosby.mvp.MvpActivity;
 

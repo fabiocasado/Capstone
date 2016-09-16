@@ -1,4 +1,4 @@
-package com.fcasado.betapp;
+package com.fcasado.betapp.utils;
 
 import android.content.Context;
 import android.os.Bundle;

@@ -1,4 +1,4 @@
-package com.fcasado.betapp;
+package com.fcasado.betapp.widget;
 
 import android.app.PendingIntent;
 import android.app.TaskStackBuilder;
@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
+import com.fcasado.betapp.R;
 import com.fcasado.betapp.details.BetDetailsActivity;
 
 /**
@@ -17,7 +18,7 @@ import com.fcasado.betapp.details.BetDetailsActivity;
  */
 public class FavoriteBetsWidgetProvider extends AppWidgetProvider {
 	public static final String EXTRA_BET_ID = "com.fcasado.betapp.EXTRA_BET_ID";
-	public static final String TOAST_ACTION = "com.fcasado.betapp.TOAST_ACTION";
+	public static final String OPEN_BET_ACTION = "com.fcasado.betapp.OPEN_BET_ACTION";
 
 	@Override
 	public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
@@ -31,7 +32,7 @@ public class FavoriteBetsWidgetProvider extends AppWidgetProvider {
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		if (intent.getAction().equals(TOAST_ACTION)) {
+		if (intent.getAction().equals(OPEN_BET_ACTION)) {
 			String betId = intent.getStringExtra(EXTRA_BET_ID);
 			if (betId == null) {
 				Toast.makeText(context, R.string.invalid_favorite_bet, Toast.LENGTH_SHORT).show();
@@ -73,7 +74,7 @@ public class FavoriteBetsWidgetProvider extends AppWidgetProvider {
 		views.setEmptyView(R.id.listView_favorite_bets, R.id.textView_empty_favorite_bets);
 
 		Intent toastIntent = new Intent(context, FavoriteBetsWidgetProvider.class);
-		toastIntent.setAction(FavoriteBetsWidgetProvider.TOAST_ACTION);
+		toastIntent.setAction(FavoriteBetsWidgetProvider.OPEN_BET_ACTION);
 		toastIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
 		intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
 		PendingIntent toastPendingIntent = PendingIntent.getBroadcast(context, 0, toastIntent, PendingIntent.FLAG_UPDATE_CURRENT);

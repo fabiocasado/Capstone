@@ -1,22 +1,17 @@
 package com.fcasado.betapp.bets;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.BaseAdapter;
 import android.widget.Toast;
 
-import com.fcasado.betapp.FirebaseUtils;
-import com.fcasado.betapp.LogUtils;
+import com.fcasado.betapp.utils.FirebaseUtils;
 import com.fcasado.betapp.R;
 import com.fcasado.betapp.data.Bet;
 import com.fcasado.betapp.details.BetDetailsActivity;
-import com.fcasado.betapp.favorites.FavoriteBetContract;
-import com.google.firebase.analytics.FirebaseAnalytics;
 import com.hannesdorfmann.mosby.mvp.MvpActivity;
 
 import java.util.List;

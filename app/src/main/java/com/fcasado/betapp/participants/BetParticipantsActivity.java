@@ -12,14 +12,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.fcasado.betapp.FirebaseUtils;
+import com.fcasado.betapp.utils.FirebaseUtils;
 import com.fcasado.betapp.R;
 import com.fcasado.betapp.data.Bet;
 import com.fcasado.betapp.data.User;
-import com.fcasado.betapp.friends.FriendsPresenter;
-import com.fcasado.betapp.friends.FriendsView;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.hannesdorfmann.mosby.mvp.MvpActivity;
 
 import java.util.ArrayList;
