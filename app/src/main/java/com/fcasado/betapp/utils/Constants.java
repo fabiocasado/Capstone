@@ -4,6 +4,8 @@ package com.fcasado.betapp.utils;
  * Created by fcasado on 6/25/16.
  */
 public class Constants {
+	public static final String FB_APP_INVITE = "https://fb.me/196364884091856";
+
 	public static final String SEPARATOR = "/";
 	public static final String CHILD_USERS = "users";
 	public static final String CHILD_BETS = "bets";

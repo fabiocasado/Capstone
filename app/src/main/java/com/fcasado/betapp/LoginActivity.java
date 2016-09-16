@@ -2,13 +2,13 @@ package com.fcasado.betapp;
 
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
-import android.content.ContentProvider;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.facebook.AccessToken;
@@ -21,12 +21,13 @@ import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.facebook.share.model.AppInviteContent;
 import com.facebook.share.widget.AppInviteDialog;
+import com.fcasado.betapp.async.AvatarAsyncTask;
 import com.fcasado.betapp.bets.BetsListActivity;
 import com.fcasado.betapp.create.CreateBetActivity;
-import com.fcasado.betapp.favorites.FavoriteBetContract;
-import com.fcasado.betapp.utils.Constants;
 import com.fcasado.betapp.data.User;
+import com.fcasado.betapp.favorites.FavoriteBetContract;
 import com.fcasado.betapp.friends.FriendsActivity;
+import com.fcasado.betapp.utils.Constants;
 import com.fcasado.betapp.utils.FirebaseUtils;
 import com.fcasado.betapp.utils.LogUtils;
 import com.fcasado.betapp.widget.FavoriteBetsWidgetProvider;
@@ -51,12 +52,6 @@ import butterknife.ButterKnife;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 	private static final String TAG = "LoginActivity";
-
-	private FirebaseAuth mAuth;
-	private FirebaseAuth.AuthStateListener mAuthListener;
-	private CallbackManager mCallbackManager;
-	private AccessTokenTracker mTracker;
-
 	@BindView(R.id.button_invite_friends)
 	Button inviteFriendsButton;
 	@BindView(R.id.test_create_bet)
@@ -65,6 +60,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 	Button betListButton;
 	@BindView(R.id.test_list_friends)
 	Button friendsListButton;
+	@BindView(R.id.test_imageView_avatar)
+	ImageView avatarImageView;
+	private FirebaseAuth mAuth;
+	private FirebaseAuth.AuthStateListener mAuthListener;
+	private CallbackManager mCallbackManager;
+	private AccessTokenTracker mTracker;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -192,14 +193,21 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 			// Update app widget data
 			int ids[] = AppWidgetManager.getInstance(this).getAppWidgetIds(new ComponentName(getApplication(), FavoriteBetsWidgetProvider.class));
 			AppWidgetManager.getInstance(this).notifyAppWidgetViewDataChanged(ids, R.id.listView_favorite_bets);
+		} else {
+			Profile fbProfile = Profile.getCurrentProfile();
+			if (fbProfile != null) {
+				AvatarAsyncTask task = new AvatarAsyncTask(avatarImageView);
+				task.execute(fbProfile.getId());
+			}
 		}
+
 		findViewById(R.id.button_invite_friends).setVisibility(user != null ? View.VISIBLE : View.GONE);
+
+
 	}
 
 	private void handleInviteFriends() {
-		String appLinkUrl, previewImageUrl;
-
-		appLinkUrl = "https://fb.me/196364884091856";
+		String appLinkUrl = Constants.FB_APP_INVITE;
 
 		if (AppInviteDialog.canShow()) {
 			AppInviteContent content = new AppInviteContent.Builder()

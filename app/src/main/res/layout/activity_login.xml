@@ -43,4 +43,11 @@
         android:text="List Friends"
         tools:visibility="gone"/>
 
+    <ImageView
+        android:id="@+id/test_imageView_avatar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:src="@mipmap/ic_launcher"/>
+
 </RelativeLayout>

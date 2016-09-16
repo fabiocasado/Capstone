@@ -24,6 +24,7 @@
     <string name="bet_data_corrupted">Bet data corrupted. Please refresh bet list.</string>
     <string name="load_friends_failed">Error loading friends</string>
     <string name="load_participants_failed">Error loading participants</string>
+    <string name="load_bets_failed">Error loading bets</string>
     <string name="load_bet_failed">Loading bet failed. Please try again</string>
     <string name="auth_failed">Authentication failed.</string>
     <string name="invalid_favorite_bet">Invalid bet. Please refresh data from the app</string>

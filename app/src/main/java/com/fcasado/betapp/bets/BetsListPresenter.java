@@ -1,10 +1,6 @@
 package com.fcasado.betapp.bets;
 
-import android.content.Context;
-import android.database.Cursor;
-
 import com.fcasado.betapp.data.Bet;
-import com.fcasado.betapp.favorites.FavoriteBetContract;
 import com.hannesdorfmann.mosby.mvp.MvpBasePresenter;
 
 import java.util.List;
@@ -38,9 +34,5 @@ public class BetsListPresenter extends MvpBasePresenter<BetsListView> {
 				}
 			}
 		});
-	}
-
-	public List<String> loadFavoriteBets(Context context) {
-		return model.loadFavoriteBets(context);
 	}
 }

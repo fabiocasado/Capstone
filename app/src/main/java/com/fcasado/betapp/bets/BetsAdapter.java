@@ -1,12 +1,9 @@
 package com.fcasado.betapp.bets;
 
-import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,10 +20,6 @@ import butterknife.ButterKnife;
  * Created by fcasado on 6/25/16.
  */
 public class BetsAdapter extends RecyclerView.Adapter<BetsAdapter.ViewHolder> {
-	public interface OnItemClickListener {
-		void onItemClick(Bet bet);
-	}
-
 	private List<Bet> bets;
 	private List<String> favoriteBetIds;
 	private OnItemClickListener onItemClickListener;
@@ -69,6 +62,10 @@ public class BetsAdapter extends RecyclerView.Adapter<BetsAdapter.ViewHolder> {
 		return bets == null ? 0 : bets.size();
 	}
 
+	public interface OnItemClickListener {
+		void onItemClick(Bet bet);
+	}
+
 	static class ViewHolder extends RecyclerView.ViewHolder {
 		@BindView(R.id.textView_title)
 		TextView title;
@@ -87,7 +84,8 @@ public class BetsAdapter extends RecyclerView.Adapter<BetsAdapter.ViewHolder> {
 			description.setText(bet.getDescription());
 			favorite.setVisibility(isFavoriteBet ? View.VISIBLE : View.GONE);
 			itemView.setOnClickListener(new View.OnClickListener() {
-				@Override public void onClick(View v) {
+				@Override
+				public void onClick(View v) {
 					listener.onItemClick(bet);
 				}
 			});
