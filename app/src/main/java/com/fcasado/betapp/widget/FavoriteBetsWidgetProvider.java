@@ -67,7 +67,6 @@ public class FavoriteBetsWidgetProvider extends AppWidgetProvider {
 								int appWidgetId) {
 		Intent intent = new Intent(context, FavoriteBetsService.class);
 		intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-		intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
 
 		RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_favorite_bets);
 		views.setRemoteAdapter(R.id.listView_favorite_bets, intent);
@@ -76,7 +75,6 @@ public class FavoriteBetsWidgetProvider extends AppWidgetProvider {
 		Intent toastIntent = new Intent(context, FavoriteBetsWidgetProvider.class);
 		toastIntent.setAction(FavoriteBetsWidgetProvider.OPEN_BET_ACTION);
 		toastIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-		intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
 		PendingIntent toastPendingIntent = PendingIntent.getBroadcast(context, 0, toastIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
 		views.setPendingIntentTemplate(R.id.listView_favorite_bets, toastPendingIntent);
