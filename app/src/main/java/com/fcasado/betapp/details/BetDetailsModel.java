@@ -1,23 +1,13 @@
 package com.fcasado.betapp.details;
 
-import android.support.annotation.NonNull;
-
 import com.fcasado.betapp.data.Bet;
 import com.fcasado.betapp.data.Constants;
-import com.fcasado.betapp.data.User;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.MutableData;
-import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,7 +18,12 @@ import java.util.Map;
 public class BetDetailsModel {
 	private static final String TAG = "BetDetailsModel";
 
-	public interface LoadDetailsListener {
+	public interface LoadBetListener {
+		void loadBetFailed();
+		void loadedBet(Bet bet);
+	}
+
+	public interface UpdateDetailsListener {
 		void updateDetailsFailed();
 		void detailsUpdated(Bet bet);
 	}
@@ -36,6 +31,23 @@ public class BetDetailsModel {
 	public interface DeleteBetListener {
 		void deleteBetFailed();
 		void betDeleted();
+	}
+
+	public void loadBet(String betId, final LoadBetListener listener) {
+		FirebaseDatabase database = FirebaseDatabase.getInstance();
+		DatabaseReference betRef = database.getReference().child(Constants.CHILD_BETS).child(betId);
+		betRef.addListenerForSingleValueEvent(new ValueEventListener() {
+			@Override
+			public void onDataChange(DataSnapshot dataSnapshot) {
+				Bet bet = dataSnapshot.getValue(Bet.class);
+				listener.loadedBet(bet);
+			}
+
+			@Override
+			public void onCancelled(DatabaseError databaseError) {
+				listener.loadBetFailed();
+			}
+		});
 	}
 
 	public void deleteBet(Bet bet, final DeleteBetListener listener) {
@@ -60,7 +72,7 @@ public class BetDetailsModel {
 		});
 	}
 
-	public void updateDetails(final Bet bet, final LoadDetailsListener listener) {
+	public void updateDetails(final Bet bet, final UpdateDetailsListener listener) {
 		FirebaseDatabase database = FirebaseDatabase.getInstance();
 		DatabaseReference betsRef = database.getReference().child(Constants.CHILD_BETS);
 		betsRef.child(bet.getBetId()).setValue(bet, new DatabaseReference.CompletionListener() {
@@ -76,7 +88,7 @@ public class BetDetailsModel {
 		});
 	}
 
-	private void updateBetParticipants(final Bet bet, final LoadDetailsListener listener) {
+	private void updateBetParticipants(final Bet bet, final UpdateDetailsListener listener) {
 		DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference().child(Constants.CHILD_USERS);
 		List<String> participantsIds = bet.getParticipants();
 		Map newPost = new HashMap();

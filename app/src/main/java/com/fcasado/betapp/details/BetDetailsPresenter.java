@@ -1,19 +1,11 @@
 package com.fcasado.betapp.details;
 
 import android.support.annotation.NonNull;
-import android.text.TextUtils;
 
 import com.fcasado.betapp.LogUtils;
-import com.fcasado.betapp.bets.BetsListModel;
-import com.fcasado.betapp.bets.BetsListView;
 import com.fcasado.betapp.data.Bet;
 import com.google.firebase.auth.FirebaseAuth;
 import com.hannesdorfmann.mosby.mvp.MvpBasePresenter;
-
-import java.text.DateFormat;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.List;
 
 /**
  * Created by fcasado on 7/1/16.
@@ -25,6 +17,24 @@ public class BetDetailsPresenter extends MvpBasePresenter<BetDetailsView> {
 
 	public BetDetailsPresenter() {
 		model = new BetDetailsModel();
+	}
+
+	public void loadBet(String betId) {
+		model.loadBet(betId, new BetDetailsModel.LoadBetListener() {
+			@Override
+			public void loadBetFailed() {
+				if (isViewAttached()) {
+					getView().showLoadBetFailed();
+				}
+			}
+
+			@Override
+			public void loadedBet(Bet bet) {
+				if (isViewAttached()) {
+					getView().showLoadedBetDetails(bet);
+				}
+			}
+		});
 	}
 
 	public void updateDetails(@NonNull Bet bet) {
@@ -41,7 +51,7 @@ public class BetDetailsPresenter extends MvpBasePresenter<BetDetailsView> {
 			bet.getPredictions().set(indexOfPlayer, getView().getPrediction());
 		}
 
-		model.updateDetails(bet, new BetDetailsModel.LoadDetailsListener() {
+		model.updateDetails(bet, new BetDetailsModel.UpdateDetailsListener() {
 			@Override
 			public void updateDetailsFailed() {
 				if (isViewAttached()) {

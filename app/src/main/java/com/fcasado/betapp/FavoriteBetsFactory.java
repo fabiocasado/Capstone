@@ -15,7 +15,8 @@ import com.fcasado.betapp.favorites.FavoriteBetContract;
 public class FavoriteBetsFactory implements RemoteViewsService.RemoteViewsFactory {
 	private Context context;
 	private Cursor cursor;
-	private int columndId;
+	private int columnId;
+	private int columnBetId;
 	private int columnTitle;
 	private int columnDescription;
 
@@ -40,7 +41,8 @@ public class FavoriteBetsFactory implements RemoteViewsService.RemoteViewsFactor
 	public void onCreate() {
 		cursor = queryFavoriteBets(context);
 		if (cursor != null) {
-			columndId = cursor.getColumnIndex(FavoriteBetContract.BetEntry._ID);
+			columnId = cursor.getColumnIndex(FavoriteBetContract.BetEntry._ID);
+			columnBetId = cursor.getColumnIndex(FavoriteBetContract.BetEntry.COLUMN_BET_ID);
 			columnTitle = cursor.getColumnIndex(FavoriteBetContract.BetEntry.COLUMN_BET_TITLE);
 			columnDescription = cursor.getColumnIndex(FavoriteBetContract.BetEntry.COLUMN_BET_DESCRIPTION);
 		}
@@ -80,7 +82,7 @@ public class FavoriteBetsFactory implements RemoteViewsService.RemoteViewsFactor
 		rv.setTextViewText(R.id.textView_description, cursor.getString(columnDescription));
 
 		Bundle extras = new Bundle();
-		extras.putInt(FavoriteBetsWidgetProvider.EXTRA_BET_ID, position);
+		extras.putString(FavoriteBetsWidgetProvider.EXTRA_BET_ID, cursor.getString(columnBetId));
 		Intent fillInIntent = new Intent();
 		fillInIntent.putExtras(extras);
 
@@ -103,7 +105,7 @@ public class FavoriteBetsFactory implements RemoteViewsService.RemoteViewsFactor
 	public long getItemId(int i) {
 		if (cursor != null && !cursor.isClosed()) {
 			cursor.moveToPosition(i);
-			return cursor.getLong(columndId);
+			return cursor.getLong(columnId);
 		}
 
 		return 0;

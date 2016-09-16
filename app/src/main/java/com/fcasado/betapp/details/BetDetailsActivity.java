@@ -66,20 +66,30 @@ public class BetDetailsActivity extends MvpActivity<BetDetailsView, BetDetailsPr
 
 		FirebaseUtils.logEvent(this, FirebaseUtils.BET_DETAILS_ACTIVITY, null);
 
-		bet = getIntent().getParcelableExtra(EXTRA_BET);
-		if (bet == null) {
-			Toast.makeText(this, R.string.bet_data_corrupted, Toast.LENGTH_SHORT).show();
-			finish();
+		// If activity opens from widget, load bet
+		if (getIntent().getStringExtra(EXTRA_BET_ID) != null) {
+			getPresenter().loadBet(getIntent().getStringExtra(EXTRA_BET_ID));
 		} else {
-			showDetails();
-		}
+		// If activity opens from app, with available bet, load data normally
+			bet = getIntent().getParcelableExtra(EXTRA_BET);
+			if (bet == null) {
+				Toast.makeText(this, R.string.bet_data_corrupted, Toast.LENGTH_SHORT).show();
+				finish();
+			} else {
+				showDetails();
+			}
 
-		setFavoriteStatus();
-		setEditionEnabledStatus();
+			setFavoriteStatus();
+			setEditionEnabledStatus();
+		}
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
+		if (bet == null) {
+			return true;
+		}
+
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.bet_details_activity, menu);
 
@@ -209,6 +219,22 @@ public class BetDetailsActivity extends MvpActivity<BetDetailsView, BetDetailsPr
 		this.bet = bet;
 		showDetails();
 		setEditionEnabledStatus();
+	}
+
+	@Override
+	public void showLoadedBetDetails(Bet bet) {
+		this.bet = bet;
+
+		invalidateOptionsMenu();
+		showDetails();
+		setFavoriteStatus();
+		setEditionEnabledStatus();
+	}
+
+	@Override
+	public void showLoadBetFailed() {
+		Toast.makeText(this, R.string.load_bet_failed, Toast.LENGTH_SHORT).show();
+		finish();
 	}
 
 	@Override

@@ -19,6 +19,12 @@ public interface BetDetailsView extends BetDataView {
 	// show updated bet
 	void showUpdatedDetails(Bet bet);
 
+	// show loaded bet details
+	void showLoadedBetDetails(Bet bet);
+
+	// show load bet failed
+	void showLoadBetFailed();
+
 	// show update failed
 	void showUpdateFailed();
 

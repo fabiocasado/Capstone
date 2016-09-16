@@ -1,6 +1,7 @@
 package com.fcasado.betapp;
 
 import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
@@ -8,6 +9,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.widget.RemoteViews;
 import android.widget.Toast;
+
+import com.fcasado.betapp.details.BetDetailsActivity;
 
 /**
  * Implementation of App Widget functionality.
@@ -28,12 +31,22 @@ public class FavoriteBetsWidgetProvider extends AppWidgetProvider {
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		AppWidgetManager mgr = AppWidgetManager.getInstance(context);
 		if (intent.getAction().equals(TOAST_ACTION)) {
-			int appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
-					AppWidgetManager.INVALID_APPWIDGET_ID);
-			int viewIndex = intent.getIntExtra(EXTRA_BET_ID, 0);
-			Toast.makeText(context, "Touched view " + viewIndex, Toast.LENGTH_SHORT).show();
+			String betId = intent.getStringExtra(EXTRA_BET_ID);
+			if (betId == null) {
+				Toast.makeText(context, R.string.invalid_favorite_bet, Toast.LENGTH_SHORT).show();
+				return;
+			}
+
+			Intent activityIntent = new Intent(context, BetDetailsActivity.class);
+			activityIntent.putExtra(BetDetailsActivity.EXTRA_BET_ID, betId);
+			activityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+			TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+			stackBuilder.addParentStack(BetDetailsActivity.class);
+			stackBuilder.addNextIntent(activityIntent);
+
+			stackBuilder.startActivities();
 		}
 
 		super.onReceive(context, intent);
