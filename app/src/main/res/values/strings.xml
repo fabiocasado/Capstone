@@ -9,10 +9,12 @@
     <string name="create">Create</string>
     <string name="see_participants">See Participants</string>
     <string name="add_participants">Add Participants</string>
+    <string name="create_bet">Create new bet</string>
     <string name="edit">Edit</string>
     <string name="save">Save</string>
     <string name="favorite">Favorite</string>
     <string name="delete">Delete</string>
+    <string name="profile">Profile</string>
     <string name="prediction">Your Prediction</string>
     <string name="declare_winners">Declare Winners</string>
     <string name="empty_friend_list">No available friends found</string>
@@ -28,4 +30,5 @@
     <string name="load_bet_failed">Loading bet failed. Please try again</string>
     <string name="auth_failed">Authentication failed.</string>
     <string name="invalid_favorite_bet">Invalid bet. Please refresh data from the app</string>
+    <string name="to_get_started_log_in">To get started,\nLog in using Facebook</string>
 </resources>

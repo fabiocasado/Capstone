@@ -16,20 +16,18 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".create.CreateBetActivity"
-                  android:parentActivityName=".LoginActivity">
+        <activity android:name=".bets.BetsListActivity">
+        </activity>
+        <activity
+            android:name=".create.CreateBetActivity"
+            android:parentActivityName=".bets.BetsListActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".LoginActivity"/>>
+                android:value=".bets.BetsListActivity"/>
         </activity>
-        <activity android:name=".bets.BetsListActivity"
-                  android:parentActivityName=".LoginActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".LoginActivity"/>>
-        </activity>
-        <activity android:name=".friends.FriendsActivity"
-                  android:parentActivityName=".LoginActivity">
+        <activity
+            android:name=".friends.FriendsActivity"
+            android:parentActivityName=".LoginActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".LoginActivity"/>>

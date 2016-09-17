@@ -1,53 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout android:id="@+id/main_layout"
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-    <com.facebook.login.widget.LoginButton
-        android:id="@+id/button_facebook_login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"/>
-
-    <Button
-        android:id="@+id/button_invite_friends"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Invite Friends"
-        tools:visibility="gone"/>
-
-    <Button
-        android:id="@+id/test_create_bet"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/button_invite_friends"
-        android:text="Create Bet"
-        tools:visibility="gone"/>
-
-    <Button
-        android:id="@+id/test_list_bets"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/test_create_bet"
-        android:text="List Bets"
-        tools:visibility="gone"/>
-
-    <Button
-        android:id="@+id/test_list_friends"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/test_list_bets"
-        android:text="List Friends"
-        tools:visibility="gone"/>
+<FrameLayout android:id="@+id/main_layout"
+             xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/test_imageView_avatar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:src="@mipmap/ic_launcher"/>
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/home_bg"/>
 
-</RelativeLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#77000000"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.5"
+            android:orientation="vertical">
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="0.4"/>
+
+            <ImageView
+                android:id="@+id/imageView_avatar"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.6"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_logo"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.5"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView_get_started"
+                style="@style/Text.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/to_get_started_log_in"
+                android:textColor="@android:color/white"/>
+
+            <com.facebook.login.widget.LoginButton
+                android:id="@+id/button_facebook_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_24"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</FrameLayout>

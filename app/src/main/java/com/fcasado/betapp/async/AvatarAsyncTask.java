@@ -3,6 +3,7 @@ package com.fcasado.betapp.async;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
 
 import java.io.IOException;
@@ -25,7 +26,7 @@ public class AvatarAsyncTask extends AsyncTask<String, Void, Bitmap> {
 		Bitmap fbAvatarBitmap = null;
 
 		try {
-			fbAvatarUrl = new URL("https://graph.facebook.com/" + params[0] + "/picture");
+			fbAvatarUrl = new URL("https://graph.facebook.com/" + params[0] + "/picture?type=large");
 			fbAvatarBitmap = BitmapFactory.decodeStream(fbAvatarUrl.openConnection().getInputStream());
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
@@ -41,6 +42,11 @@ public class AvatarAsyncTask extends AsyncTask<String, Void, Bitmap> {
 
 		if (imageView != null && bitmap != null) {
 			imageView.setImageBitmap(bitmap);
+
+			AlphaAnimation animation = new AlphaAnimation(0.2f, 1f);
+			animation.setDuration(300);
+			animation.setFillBefore(true);
+			imageView.startAnimation(animation);
 		}
 	}
 }

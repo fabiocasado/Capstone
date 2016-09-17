@@ -15,4 +15,5 @@ public class Constants {
 
 	public static final int REQUEST_CODE_SELECTION = 10001;
 	public static final int REQUEST_CODE_PARTICIPANTS = 10002;
+	public static final int REQUEST_CODE_PROFILE = 10003;
 }

@@ -7,9 +7,9 @@
     <dimen name="container_horizontal_margin">8dp</dimen>
     <dimen name="container_vertical_margin">8dp</dimen>
 
-    <!--
-Refer to App Widget Documentation for margin information
-http://developer.android.com/guide/topics/appwidgets/index.html#CreatingLayout
-    -->
     <dimen name="widget_margin">8dp</dimen>
+
+    <dimen name="dimen_1">1dp</dimen>
+    <dimen name="dimen_2">2dp</dimen>
+    <dimen name="dimen_24">24dp</dimen>
 </resources>

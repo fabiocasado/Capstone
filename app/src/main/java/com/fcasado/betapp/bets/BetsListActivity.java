@@ -11,12 +11,19 @@ import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.fcasado.betapp.BetApp;
+import com.fcasado.betapp.LoginActivity;
 import com.fcasado.betapp.R;
+import com.fcasado.betapp.create.CreateBetActivity;
 import com.fcasado.betapp.data.Bet;
 import com.fcasado.betapp.details.BetDetailsActivity;
 import com.fcasado.betapp.favorites.FavoriteBetContract;
+import com.fcasado.betapp.utils.Constants;
 import com.fcasado.betapp.utils.FirebaseUtils;
 import com.hannesdorfmann.mosby.mvp.MvpActivity;
 
@@ -55,6 +62,44 @@ public class BetsListActivity extends MvpActivity<BetsListView, BetsListPresente
 		swipeRefreshLayout.setOnRefreshListener(this);
 
 		getLoaderManager().initLoader(LOADER_FAVORITE_BET, null, this);
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.bet_list_activity, menu);
+
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			case R.id.create:
+				startActivity(new Intent(BetsListActivity.this, CreateBetActivity.class));
+				return true;
+			case R.id.profile:
+				Intent profileIntent = new Intent(BetsListActivity.this, LoginActivity.class);
+				profileIntent.putExtra(LoginActivity.EXTRA_SHOW_PROFILE, true);
+				startActivityForResult(profileIntent, Constants.REQUEST_CODE_PROFILE);
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
+		}
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+
+		switch (requestCode) {
+			case Constants.REQUEST_CODE_PROFILE:
+				if (BetApp.currentUser == null) {
+					finish();
+				}
+				break;
+			default:
+		}
 	}
 
 	@Override
