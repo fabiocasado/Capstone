@@ -9,6 +9,12 @@
         app:showAsAction="always"/>
 
     <item
+        android:id="@+id/friends_list"
+        android:icon="@drawable/ic_people_white"
+        android:title="@string/friends_list"
+        app:showAsAction="ifRoom"/>
+
+    <item
         android:id="@+id/profile"
         android:title="@string/profile"
         app:showAsAction="never"/>

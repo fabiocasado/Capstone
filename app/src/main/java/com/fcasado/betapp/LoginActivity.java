@@ -182,7 +182,6 @@ public class LoginActivity extends AppCompatActivity {
 	}
 
 	private void updateUI(FirebaseUser user) {
-		LogUtils.d(TAG, "User value: " + user);
 		if (user == null) {
 			// User logged out
 			getContentResolver().delete(FavoriteBetContract.BetEntry.CONTENT_URI, null, null);
@@ -229,17 +228,6 @@ public class LoginActivity extends AppCompatActivity {
 		Intent betListIntent = new Intent(LoginActivity.this, BetsListActivity.class);
 		startActivity(betListIntent);
 		finish();
-	}
-
-	private void handleInviteFriends() {
-		String appLinkUrl = Constants.FB_APP_INVITE;
-
-		if (AppInviteDialog.canShow()) {
-			AppInviteContent content = new AppInviteContent.Builder()
-					.setApplinkUrl(appLinkUrl)
-					.build();
-			AppInviteDialog.show(this, content);
-		}
 	}
 
 	private void userLoggedIn() {

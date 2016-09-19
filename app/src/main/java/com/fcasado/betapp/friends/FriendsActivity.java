@@ -5,12 +5,18 @@ import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.share.model.AppInviteContent;
+import com.facebook.share.widget.AppInviteDialog;
 import com.fcasado.betapp.R;
 import com.fcasado.betapp.data.User;
+import com.fcasado.betapp.utils.Constants;
 import com.hannesdorfmann.mosby.mvp.MvpActivity;
 
 import java.util.List;
@@ -42,6 +48,32 @@ public class FriendsActivity extends MvpActivity<FriendsView, FriendsPresenter> 
 		recyclerView.setLayoutManager(new LinearLayoutManager(this));
 		recyclerView.setAdapter(adapter);
 		swipeRefreshLayout.setOnRefreshListener(this);
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.friends_list_activity, menu);
+
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			case R.id.invite_friends:
+				String appLinkUrl = Constants.FB_APP_INVITE;
+
+				if (AppInviteDialog.canShow()) {
+					AppInviteContent content = new AppInviteContent.Builder()
+							.setApplinkUrl(appLinkUrl)
+							.build();
+					AppInviteDialog.show(this, content);
+				}
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
+		}
 	}
 
 	@Override

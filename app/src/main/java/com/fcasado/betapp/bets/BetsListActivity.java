@@ -23,6 +23,7 @@ import com.fcasado.betapp.create.CreateBetActivity;
 import com.fcasado.betapp.data.Bet;
 import com.fcasado.betapp.details.BetDetailsActivity;
 import com.fcasado.betapp.favorites.FavoriteBetContract;
+import com.fcasado.betapp.friends.FriendsActivity;
 import com.fcasado.betapp.utils.Constants;
 import com.fcasado.betapp.utils.FirebaseUtils;
 import com.hannesdorfmann.mosby.mvp.MvpActivity;
@@ -77,6 +78,9 @@ public class BetsListActivity extends MvpActivity<BetsListView, BetsListPresente
 		switch (item.getItemId()) {
 			case R.id.create:
 				startActivity(new Intent(BetsListActivity.this, CreateBetActivity.class));
+				return true;
+			case R.id.friends_list:
+				startActivity(new Intent(BetsListActivity.this, FriendsActivity.class));
 				return true;
 			case R.id.profile:
 				Intent profileIntent = new Intent(BetsListActivity.this, LoginActivity.class);

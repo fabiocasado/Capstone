@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">BetApp</string>
     <string name="facebook_application_id" translatable="false">192198271175184</string>
+    <string name="activity_bet_list">Your bets</string>
+    <string name="activity_friends_list">Friends</string>
+    <string name="activitiy_create_bet">Create bet</string>
     <string name="title">Title</string>
     <string name="description">Description</string>
     <string name="from">From</string>
@@ -9,10 +12,12 @@
     <string name="create">Create</string>
     <string name="see_participants">See Participants</string>
     <string name="add_participants">Add Participants</string>
+    <string name="invite_friends">Invite friends</string>
     <string name="create_bet">Create new bet</string>
     <string name="edit">Edit</string>
     <string name="save">Save</string>
     <string name="favorite">Favorite</string>
+    <string name="friends_list">Friends list</string>
     <string name="delete">Delete</string>
     <string name="profile">Profile</string>
     <string name="prediction">Your Prediction</string>
