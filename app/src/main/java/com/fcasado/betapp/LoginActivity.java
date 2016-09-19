@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,18 +49,15 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+public class LoginActivity extends AppCompatActivity {
 	public static final String EXTRA_SHOW_PROFILE = "extra_show_profile";
 	private static final String TAG = "LoginActivity";
-	//	@BindView(R.id.button_invite_friends)
-//	Button inviteFriendsButton;
-//	@BindView(R.id.test_list_bets)
-//	Button betListButton;
-//	@BindView(R.id.test_list_friends)
-//	Button friendsListButton;
 	@BindView(R.id.textView_get_started)
 	TextView getStartedTextView;
+	@BindView(R.id.button_get_started)
+	Button getStartedButton;
 	@BindView(R.id.imageView_avatar)
 	ImageView avatarImageView;
 	private FirebaseAuth mAuth;
@@ -75,11 +74,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 		ButterKnife.bind(this);
 
 		FirebaseUtils.logEvent(this, FirebaseUtils.LOGIN_ACTIVITY, null);
-
-//		// UI
-//		inviteFriendsButton.setOnClickListener(this);
-//		betListButton.setOnClickListener(this);
-//		friendsListButton.setOnClickListener(this);
 
 		mTracker = new AccessTokenTracker() {
 			@Override
@@ -200,6 +194,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 			// Update ui
 			avatarImageView.setImageResource(R.drawable.ic_logo);
 			getStartedTextView.setText(R.string.to_get_started_log_in);
+			getStartedButton.setVisibility(View.GONE);
 
 			// Remove current user
 			BetApp.currentUser = null;
@@ -219,8 +214,21 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 				task.execute(fbProfile.getId());
 
 				getStartedTextView.setText("\n".concat(fbProfile.getName()));
+
+				getStartedButton.setVisibility(View.VISIBLE);
+				AlphaAnimation animation = new AlphaAnimation(0.2f, 1f);
+				animation.setDuration(300);
+				animation.setFillBefore(true);
+				getStartedButton.startAnimation(animation);
 			}
 		}
+	}
+
+	@OnClick(R.id.button_get_started)
+	public void onGetStartedClicked() {
+		Intent betListIntent = new Intent(LoginActivity.this, BetsListActivity.class);
+		startActivity(betListIntent);
+		finish();
 	}
 
 	private void handleInviteFriends() {
@@ -232,22 +240,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 					.build();
 			AppInviteDialog.show(this, content);
 		}
-	}
-
-	@Override
-	public void onClick(View v) {
-//		switch (v.getId()) {
-//			case R.id.button_invite_friends:
-//				handleInviteFriends();
-//				break;
-//			case R.id.test_list_bets:
-//				startActivity(new Intent(LoginActivity.this, BetsListActivity.class));
-//				break;
-//			case R.id.test_list_friends:
-//				startActivity(new Intent(LoginActivity.this, FriendsActivity.class));
-//				break;
-//
-//		}
 	}
 
 	private void userLoggedIn() {
