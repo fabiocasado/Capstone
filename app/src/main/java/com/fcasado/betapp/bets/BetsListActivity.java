@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -34,6 +35,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by fcasado on 6/24/16.
@@ -47,6 +49,8 @@ public class BetsListActivity extends MvpActivity<BetsListView, BetsListPresente
 	RecyclerView recyclerView;
 	@BindView(R.id.swiperefresh)
 	SwipeRefreshLayout swipeRefreshLayout;
+	@BindView(R.id.floatingActionButton)
+	FloatingActionButton fab;
 
 	private BetsAdapter adapter;
 
@@ -78,9 +82,6 @@ public class BetsListActivity extends MvpActivity<BetsListView, BetsListPresente
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-			case R.id.create:
-				startActivity(new Intent(BetsListActivity.this, CreateBetActivity.class));
-				return true;
 			case R.id.friends_list:
 				startActivity(new Intent(BetsListActivity.this, FriendsActivity.class));
 				return true;
@@ -185,5 +186,10 @@ public class BetsListActivity extends MvpActivity<BetsListView, BetsListPresente
 		Intent intent = new Intent(this, BetDetailsActivity.class);
 		intent.putExtra(BetDetailsActivity.EXTRA_BET, bet);
 		startActivity(intent);
+	}
+
+	@OnClick(R.id.floatingActionButton)
+	public void onFabClicked() {
+		startActivity(new Intent(BetsListActivity.this, CreateBetActivity.class));
 	}
 }

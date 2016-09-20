@@ -3,12 +3,6 @@
       xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/create"
-        android:icon="@drawable/ic_add_white"
-        android:title="@string/create_bet"
-        app:showAsAction="always"/>
-
-    <item
         android:id="@+id/friends_list"
         android:icon="@drawable/ic_people_white"
         android:title="@string/friends_list"

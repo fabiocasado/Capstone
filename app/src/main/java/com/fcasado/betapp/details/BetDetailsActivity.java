@@ -171,6 +171,8 @@ public class BetDetailsActivity extends MvpActivity<BetDetailsView, BetDetailsPr
 					if (data != null && data.hasExtra(BetParticipantsActivity.EXTRA_BET_WINNERS)) {
 						List<String> betWinners = data.getStringArrayListExtra(BetParticipantsActivity.EXTRA_BET_WINNERS);
 						bet.setWinners(betWinners);
+
+						getPresenter().updateDetails(bet);
 					}
 				}
 		}

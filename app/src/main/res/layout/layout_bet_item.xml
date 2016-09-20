@@ -31,10 +31,11 @@
 
         <ImageView
             android:id="@+id/imageView_favorite"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/item_layout_icon_medium"
+            android:layout_height="@dimen/item_layout_icon_medium"
             android:tint="@color/colorAccent"
             android:visibility="gone"
+            android:scaleType="fitCenter"
             app:srcCompat="@drawable/ic_star_white"/>
 
     </LinearLayout>
