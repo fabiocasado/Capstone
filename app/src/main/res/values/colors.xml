@@ -7,4 +7,5 @@
 
     <color name="labelTextColor">@android:color/darker_gray</color>
     <color name="widget_background">@android:color/background_light</color>
+    <color name="divider_light">#C3C3C3</color>
 </resources>

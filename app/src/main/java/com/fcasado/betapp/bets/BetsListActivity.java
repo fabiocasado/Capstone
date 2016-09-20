@@ -20,6 +20,7 @@ import com.fcasado.betapp.BetApp;
 import com.fcasado.betapp.LoginActivity;
 import com.fcasado.betapp.R;
 import com.fcasado.betapp.create.CreateBetActivity;
+import com.fcasado.betapp.custom.LineDividerItemDecoration;
 import com.fcasado.betapp.data.Bet;
 import com.fcasado.betapp.details.BetDetailsActivity;
 import com.fcasado.betapp.favorites.FavoriteBetContract;
@@ -60,6 +61,7 @@ public class BetsListActivity extends MvpActivity<BetsListView, BetsListPresente
 		adapter = new BetsAdapter(this);
 		recyclerView.setLayoutManager(new LinearLayoutManager(this));
 		recyclerView.setAdapter(adapter);
+		recyclerView.addItemDecoration(new LineDividerItemDecoration(this, 0));
 		swipeRefreshLayout.setOnRefreshListener(this);
 
 		getLoaderManager().initLoader(LOADER_FAVORITE_BET, null, this);
