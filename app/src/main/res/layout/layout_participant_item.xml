@@ -13,18 +13,21 @@
         style="@style/Container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:src="@mipmap/ic_launcher"/>
+            android:id="@+id/imageView_avatar"
+            android:layout_width="@dimen/item_layout_avatar_medium"
+            android:layout_height="@dimen/item_layout_avatar_medium"
+            tools:src="@drawable/ic_portrait_black"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginLeft="@dimen/container_horizontal_margin">
+            android:layout_marginStart="@dimen/container_horizontal_margin"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/textView_name"

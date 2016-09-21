@@ -6,8 +6,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.fcasado.betapp.R;
 import com.fcasado.betapp.data.User;
 
@@ -23,17 +25,12 @@ import butterknife.ButterKnife;
  * Created by fcasado on 9/8/16.
  */
 public class ParticipantsAdapter extends RecyclerView.Adapter<ParticipantsAdapter.ParticipantsHolder> {
-	public interface OnItemClickListener {
-		void onItemClick(User user);
-	}
-
 	private List<Pair<User, String>> predictions;
 	// Only useful is bet is already finished and winners have been declared
 	private List<String> betWinners;
 	private boolean canSelectWinner;
 	private Set<String> selectedWinners;
 	private OnItemClickListener onItemClickListener;
-
 	public ParticipantsAdapter(List<String> betWinners) {
 		predictions = new ArrayList<>();
 		selectedWinners = new HashSet<>();
@@ -103,11 +100,17 @@ public class ParticipantsAdapter extends RecyclerView.Adapter<ParticipantsAdapte
 		return predictions == null ? 0 : predictions.size();
 	}
 
+	public interface OnItemClickListener {
+		void onItemClick(User user);
+	}
+
 	static class ParticipantsHolder extends RecyclerView.ViewHolder {
 		@BindView(R.id.textView_name)
 		TextView name;
 		@BindView(R.id.textView_prediction)
 		TextView prediction;
+		@BindView(R.id.imageView_avatar)
+		ImageView avatar;
 
 		public ParticipantsHolder(View itemView) {
 			super(itemView);
@@ -116,10 +119,17 @@ public class ParticipantsAdapter extends RecyclerView.Adapter<ParticipantsAdapte
 
 		public void bindListener(final User user, final OnItemClickListener listener) {
 			itemView.setOnClickListener(new View.OnClickListener() {
-				@Override public void onClick(View v) {
+				@Override
+				public void onClick(View v) {
 					listener.onItemClick(user);
 				}
 			});
+			Glide.with(itemView.getContext())
+					.load("https://graph.facebook.com/" + user.getFacebookId() + "/picture?type=large")
+					.placeholder(R.drawable.ic_portrait_black)
+					.crossFade()
+					.fitCenter()
+					.into(avatar);
 		}
 	}
 }

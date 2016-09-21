@@ -14,4 +14,5 @@
     <dimen name="dimen_24">24dp</dimen>
 
     <dimen name="item_layout_icon_medium">34dp</dimen>
+    <dimen name="item_layout_avatar_medium">52dp</dimen>
 </resources>

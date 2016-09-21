@@ -52,6 +52,9 @@ dependencies {
     // SVG images
     compile 'com.android.support:appcompat-v7:24.2.1'
     compile 'com.android.support:design:24.2.1'
+
+    // Glide
+    compile 'com.github.bumptech.glide:glide:3.7.0'
 }
 
 // Add to the bottom of the file
