@@ -3,7 +3,9 @@
     <string name="facebook_application_id" translatable="false">192198271175184</string>
     <string name="activity_bet_list">Your bets</string>
     <string name="activity_friends_list">Friends</string>
-    <string name="activitiy_create_bet">Create bet</string>
+    <string name="activity_create_bet">Create bet</string>
+    <string name="activity_bet_details">Bet details</string>
+    <string name="activity_bet_participants">Bet participants</string>
     <string name="title">Title</string>
     <string name="description">Description</string>
     <string name="from">From</string>

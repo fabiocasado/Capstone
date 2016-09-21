@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.facebook.share.model.AppInviteContent;
 import com.facebook.share.widget.AppInviteDialog;
 import com.fcasado.betapp.R;
+import com.fcasado.betapp.custom.LineDividerItemDecoration;
 import com.fcasado.betapp.data.User;
 import com.fcasado.betapp.utils.Constants;
 import com.hannesdorfmann.mosby.mvp.MvpActivity;
@@ -47,6 +48,7 @@ public class FriendsActivity extends MvpActivity<FriendsView, FriendsPresenter> 
 		adapter = new FriendsAdapter(shouldAllowSelection());
 		recyclerView.setLayoutManager(new LinearLayoutManager(this));
 		recyclerView.setAdapter(adapter);
+		recyclerView.addItemDecoration(new LineDividerItemDecoration(this, 0));
 		swipeRefreshLayout.setOnRefreshListener(this);
 	}
 

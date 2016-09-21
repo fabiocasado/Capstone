@@ -3,7 +3,9 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="colorAccentTransparent">#88FF4081</color>
     <color name="button_color">@color/colorAccent</color>
+
 
     <color name="labelTextColor">@android:color/darker_gray</color>
     <color name="widget_background">@android:color/background_light</color>

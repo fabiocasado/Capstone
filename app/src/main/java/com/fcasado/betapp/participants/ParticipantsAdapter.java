@@ -1,8 +1,11 @@
 package com.fcasado.betapp.participants;
 
+import android.content.Context;
 import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.util.Pair;
 import android.support.v7.widget.RecyclerView;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +34,7 @@ public class ParticipantsAdapter extends RecyclerView.Adapter<ParticipantsAdapte
 	private boolean canSelectWinner;
 	private Set<String> selectedWinners;
 	private OnItemClickListener onItemClickListener;
+
 	public ParticipantsAdapter(List<String> betWinners) {
 		predictions = new ArrayList<>();
 		selectedWinners = new HashSet<>();
@@ -91,8 +95,16 @@ public class ParticipantsAdapter extends RecyclerView.Adapter<ParticipantsAdapte
 		String userPrediction = predictions.get(position).second;
 		holder.name.setText(user.getName());
 		holder.prediction.setText(userPrediction);
-		holder.name.setTextColor(betWinners.contains(user.getUid()) || selectedWinners.contains(user.getUid()) ? Color.RED : Color.BLACK);
+		holder.itemView.setBackgroundColor(betWinners.contains(user.getUid()) || selectedWinners.contains(user.getUid())
+				? ContextCompat.getColor(holder.itemView.getContext(), R.color.colorAccentTransparent)
+				: Color.TRANSPARENT);
 		holder.bindListener(user, onItemClickListener);
+		Glide.with(holder.avatar.getContext())
+				.load("https://graph.facebook.com/" + user.getFacebookId() + "/picture?type=large")
+				.placeholder(R.drawable.ic_portrait_black)
+				.crossFade()
+				.fitCenter()
+				.into(holder.avatar);
 	}
 
 	@Override
@@ -124,12 +136,6 @@ public class ParticipantsAdapter extends RecyclerView.Adapter<ParticipantsAdapte
 					listener.onItemClick(user);
 				}
 			});
-			Glide.with(itemView.getContext())
-					.load("https://graph.facebook.com/" + user.getFacebookId() + "/picture?type=large")
-					.placeholder(R.drawable.ic_portrait_black)
-					.crossFade()
-					.fitCenter()
-					.into(avatar);
 		}
 	}
 }

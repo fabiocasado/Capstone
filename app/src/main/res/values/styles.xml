@@ -16,6 +16,13 @@
         <item name="android:paddingTop">@dimen/container_vertical_margin</item>
     </style>
 
+    <style name="Container.FullWidth" parent="AppTheme">
+        <item name="android:paddingBottom">@dimen/container_vertical_margin</item>
+        <item name="android:paddingEnd">@dimen/activity_horizontal_margin</item>
+        <item name="android:paddingStart">@dimen/activity_horizontal_margin</item>
+        <item name="android:paddingTop">@dimen/container_vertical_margin</item>
+    </style>
+
     <style name="Input.Title" parent="Widget.AppCompat.EditText">
         <item name="android:inputType">textCapWords</item>
     </style>

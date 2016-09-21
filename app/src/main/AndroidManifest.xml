@@ -21,7 +21,7 @@
         </activity>
         <activity
             android:name=".create.CreateBetActivity"
-            android:label="@string/activitiy_create_bet"
+            android:label="@string/activity_create_bet"
             android:parentActivityName=".bets.BetsListActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -37,12 +37,18 @@
         </activity>
         <activity
             android:name=".details.BetDetailsActivity"
+            android:label="@string/activity_bet_details"
             android:parentActivityName=".bets.BetsListActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".bets.BetsListActivity"/>
         </activity>
-        <activity android:name=".participants.BetParticipantsActivity">
+        <activity android:name=".participants.BetParticipantsActivity"
+                  android:label="@string/activity_bet_participants"
+                  android:parentActivityName=".details.BetDetailsActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".details.BetDetailsActivity"/>
         </activity>
         <activity android:name=".friends.AddParticipantsActivity">
         </activity>
