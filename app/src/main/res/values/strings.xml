@@ -38,4 +38,5 @@
     <string name="auth_failed">Authentication failed.</string>
     <string name="invalid_favorite_bet">Invalid bet. Please refresh data from the app</string>
     <string name="to_get_started_log_in">To get started,\nLog in using Facebook</string>
+    <string name="no_connectivity">No internet access. Please check your connectivity</string>
 </resources>

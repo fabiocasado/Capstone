@@ -30,6 +30,7 @@ import com.fcasado.betapp.favorites.FavoriteBetContract;
 import com.fcasado.betapp.utils.Constants;
 import com.fcasado.betapp.utils.FirebaseUtils;
 import com.fcasado.betapp.utils.LogUtils;
+import com.fcasado.betapp.utils.NetworkUtils;
 import com.fcasado.betapp.widget.FavoriteBetsWidgetProvider;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -128,6 +129,9 @@ public class LoginActivity extends AppCompatActivity {
 		if (getIntent().hasExtra("LOG_OUT")) {
 			loginButton.callOnClick();
 		}
+
+		// We won't change the UI for now, so we can disregard the return value
+		NetworkUtils.checkOnlineAndNotifyIfNeeded(this);
 	}
 
 	@Override

@@ -24,7 +24,7 @@
     </style>
 
     <style name="Input.Title" parent="Widget.AppCompat.EditText">
-        <item name="android:inputType">textCapWords</item>
+        <item name="android:inputType">textCapSentences</item>
     </style>
 
     <style name="Input.Body" parent="Widget.AppCompat.EditText">

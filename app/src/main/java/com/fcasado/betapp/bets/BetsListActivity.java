@@ -28,6 +28,7 @@ import com.fcasado.betapp.favorites.FavoriteBetContract;
 import com.fcasado.betapp.friends.FriendsActivity;
 import com.fcasado.betapp.utils.Constants;
 import com.fcasado.betapp.utils.FirebaseUtils;
+import com.fcasado.betapp.utils.NetworkUtils;
 import com.hannesdorfmann.mosby.mvp.MvpActivity;
 
 import java.util.ArrayList;
@@ -61,6 +62,9 @@ public class BetsListActivity extends MvpActivity<BetsListView, BetsListPresente
 		ButterKnife.bind(this);
 
 		FirebaseUtils.logEvent(this, FirebaseUtils.BET_LISTS_ACTIVITY, null);
+
+		// We won't change the UI for now, so we can disregard the return value
+		NetworkUtils.checkOnlineAndNotifyIfNeeded(this);
 
 		adapter = new BetsAdapter(this);
 		recyclerView.setLayoutManager(new LinearLayoutManager(this));

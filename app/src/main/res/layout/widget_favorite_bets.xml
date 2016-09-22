@@ -1,23 +1,44 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             android:background="@color/widget_background"
-             android:padding="@dimen/widget_margin">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/widget_background"
+              android:orientation="vertical"
+              android:padding="@dimen/widget_margin">
 
     <TextView
-        android:id="@+id/textView_empty_favorite_bets"
         style="@style/Text.Medium"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/empty_favorite_bets_list"
-        android:textColor="@android:color/primary_text_light"
-        android:layout_margin="@dimen/container_horizontal_margin"/>
+        android:layout_margin="@dimen/container_horizontal_margin"
+        android:text="Favorite bets"
+        android:textColor="@color/colorAccent"
+        android:textStyle="bold"/>
 
-    <ListView
-        android:id="@+id/listView_favorite_bets"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:divider="@null"
-        android:dividerHeight="0dp"/>
+        android:layout_height="@dimen/dimen_1"
+        android:background="@color/divider_light"/>
 
-</FrameLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/textView_empty_favorite_bets"
+            style="@style/Text.Medium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/container_horizontal_margin"
+            android:text="@string/empty_favorite_bets_list"
+            android:textColor="@android:color/primary_text_light"/>
+
+        <ListView
+            android:id="@+id/listView_favorite_bets"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@null"
+            android:dividerHeight="0dp"/>
+    </FrameLayout>
+
+
+</LinearLayout>
