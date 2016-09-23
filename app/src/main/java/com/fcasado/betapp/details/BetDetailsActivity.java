@@ -1,10 +1,12 @@
 package com.fcasado.betapp.details;
 
+import android.annotation.TargetApi;
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.Menu;

@@ -144,4 +144,9 @@ public class BetParticipantsActivity extends MvpActivity<ParticipantsView, Parti
 		adapter.setPredictions(predictions);
 		swipeRefreshLayout.setRefreshing(false);
 	}
+
+	@Override
+	public Intent getParentActivityIntent() {
+		return super.getParentActivityIntent().addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+	}
 }

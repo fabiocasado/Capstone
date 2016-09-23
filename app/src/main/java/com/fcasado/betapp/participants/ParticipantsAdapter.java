@@ -1,7 +1,5 @@
 package com.fcasado.betapp.participants;
 
-import android.graphics.Color;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.util.Pair;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -92,9 +90,9 @@ public class ParticipantsAdapter extends RecyclerView.Adapter<ParticipantsAdapte
 		String userPrediction = predictions.get(position).second;
 		holder.name.setText(user.getName());
 		holder.prediction.setText(userPrediction);
-		holder.itemView.setBackgroundColor(betWinners.contains(user.getUid()) || selectedWinners.contains(user.getUid())
-				? ContextCompat.getColor(holder.itemView.getContext(), R.color.colorAccentTransparent)
-				: Color.TRANSPARENT);
+		holder.winner.setVisibility(betWinners.contains(user.getUid()) || selectedWinners.contains(user.getUid())
+				? View.VISIBLE
+				: View.INVISIBLE);
 		holder.bindListener(user, onItemClickListener);
 		Glide.with(holder.avatar.getContext())
 				.load("https://graph.facebook.com/" + user.getFacebookId() + "/picture?type=large")
@@ -120,6 +118,8 @@ public class ParticipantsAdapter extends RecyclerView.Adapter<ParticipantsAdapte
 		TextView prediction;
 		@BindView(R.id.imageView_avatar)
 		ImageView avatar;
+		@BindView(R.id.imageView_winner)
+		ImageView winner;
 
 		public ParticipantsHolder(View itemView) {
 			super(itemView);

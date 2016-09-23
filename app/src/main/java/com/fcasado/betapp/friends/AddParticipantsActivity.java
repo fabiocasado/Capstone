@@ -75,4 +75,9 @@ public class AddParticipantsActivity extends FriendsActivity {
 
 		super.showFriends(friends);
 	}
+
+	@Override
+	public Intent getParentActivityIntent() {
+		return super.getParentActivityIntent().addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+	}
 }

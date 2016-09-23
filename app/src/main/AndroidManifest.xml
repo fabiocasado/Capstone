@@ -50,7 +50,12 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".details.BetDetailsActivity"/>
         </activity>
-        <activity android:name=".friends.AddParticipantsActivity">
+        <activity android:name=".friends.AddParticipantsActivity"
+                  android:label="@string/activity_bet_participants"
+                  android:parentActivityName=".details.BetDetailsActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".details.BetDetailsActivity"/>
         </activity>
 
         <provider

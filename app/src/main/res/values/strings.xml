@@ -6,6 +6,7 @@
     <string name="activity_create_bet">Create bet</string>
     <string name="activity_bet_details">Bet details</string>
     <string name="activity_bet_participants">Bet participants</string>
+    <string name="activity_add_participants">Add participants</string>
     <string name="title">Title</string>
     <string name="description">Description</string>
     <string name="reward">Reward</string>
@@ -38,6 +39,7 @@
     <string name="content_description_home_screen_background">Home screen background</string>
     <string name="content_description_user_avatar_image">User avatar image</string>
     <string name="content_description_start_image_meaning_bet_is_favorite">Start image meaning bet is favorite</string>
+    <string name="content_description_start_image_meaning_participant_is_winner">Start image meaning participant is winner</string>
     <string name="favorite_bets">Favorite bets</string>
     <string name="get_started">Get started</string>
 </resources>
