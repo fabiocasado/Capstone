@@ -1,8 +1,6 @@
 package com.fcasado.betapp.participants;
 
 import com.fcasado.betapp.data.User;
-import com.fcasado.betapp.friends.FriendsModel;
-import com.fcasado.betapp.friends.FriendsView;
 import com.hannesdorfmann.mosby.mvp.MvpBasePresenter;
 
 import java.util.List;

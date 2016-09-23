@@ -8,15 +8,11 @@
     <string name="activity_bet_participants">Bet participants</string>
     <string name="title">Title</string>
     <string name="description">Description</string>
-    <string name="from">From</string>
-    <string name="to">To</string>
     <string name="reward">Reward</string>
     <string name="create">Create</string>
     <string name="see_participants">See Participants</string>
     <string name="add_participants">Add Participants</string>
     <string name="invite_friends">Invite friends</string>
-    <string name="create_bet">Create new bet</string>
-    <string name="edit">Edit</string>
     <string name="save">Save</string>
     <string name="favorite">Favorite</string>
     <string name="friends_list">Friends list</string>
@@ -39,4 +35,9 @@
     <string name="invalid_favorite_bet">Invalid bet. Please refresh data from the app</string>
     <string name="to_get_started_log_in">To get started,\nLog in using Facebook</string>
     <string name="no_connectivity">No internet access. Please check your connectivity</string>
+    <string name="content_description_home_screen_background">Home screen background</string>
+    <string name="content_description_user_avatar_image">User avatar image</string>
+    <string name="content_description_start_image_meaning_bet_is_favorite">Start image meaning bet is favorite</string>
+    <string name="favorite_bets">Favorite bets</string>
+    <string name="get_started">Get started</string>
 </resources>

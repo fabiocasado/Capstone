@@ -2,7 +2,6 @@ package com.fcasado.betapp.friends;
 
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
-import android.util.ArraySet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +10,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.fcasado.betapp.R;
-import com.fcasado.betapp.data.Bet;
 import com.fcasado.betapp.data.User;
 
 import java.util.ArrayList;
@@ -26,15 +24,10 @@ import butterknife.ButterKnife;
  * Created by fcasado on 6/30/16.
  */
 public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.FriendsHolder> {
-	public interface OnItemClickListener {
-		void onItemClick(User user);
-	}
-
 	private List<User> friends;
 	private boolean isSelectable;
 	private Set<User> selectedFriends;
 	private OnItemClickListener onItemClickListener;
-
 	public FriendsAdapter(boolean isListSelectable) {
 		isSelectable = isListSelectable;
 		friends = new ArrayList<>();
@@ -56,8 +49,7 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.FriendsH
 	}
 
 	public ArrayList<User> getSelectedUsers() {
-		ArrayList<User> selectedUsers = new ArrayList<>(selectedFriends);
-		return selectedUsers;
+		return new ArrayList<>(selectedFriends);
 	}
 
 	public void clearFriends() {
@@ -90,6 +82,10 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.FriendsH
 		return friends == null ? 0 : friends.size();
 	}
 
+	public interface OnItemClickListener {
+		void onItemClick(User user);
+	}
+
 	static class FriendsHolder extends RecyclerView.ViewHolder {
 		@BindView(R.id.textView_name)
 		TextView name;
@@ -103,7 +99,8 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.FriendsH
 
 		public void bindListener(final User user, final OnItemClickListener listener) {
 			itemView.setOnClickListener(new View.OnClickListener() {
-				@Override public void onClick(View v) {
+				@Override
+				public void onClick(View v) {
 					listener.onItemClick(user);
 				}
 			});

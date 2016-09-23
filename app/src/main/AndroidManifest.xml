@@ -57,7 +57,8 @@
             android:name=".favorites.FavoriteBetProvider"
             android:authorities="com.fcasado.betapp"
             android:enabled="true"
-            android:exported="true">
+            android:exported="true"
+            android:permission="com.fcasado.betapp.provider.permission.FULL_ACCESS">
         </provider>
 
         <receiver android:name=".widget.FavoriteBetsWidgetProvider">

@@ -10,7 +10,6 @@
     <dimen name="widget_margin">8dp</dimen>
 
     <dimen name="dimen_1">1dp</dimen>
-    <dimen name="dimen_2">2dp</dimen>
     <dimen name="dimen_24">24dp</dimen>
 
     <dimen name="item_layout_icon_medium">34dp</dimen>

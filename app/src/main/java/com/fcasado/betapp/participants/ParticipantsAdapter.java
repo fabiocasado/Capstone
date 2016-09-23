@@ -1,11 +1,9 @@
 package com.fcasado.betapp.participants;
 
-import android.content.Context;
 import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.util.Pair;
 import android.support.v7.widget.RecyclerView;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -80,8 +78,7 @@ public class ParticipantsAdapter extends RecyclerView.Adapter<ParticipantsAdapte
 	}
 
 	public ArrayList<String> getSelectedWinners() {
-		ArrayList<String> winners = new ArrayList<>(selectedWinners);
-		return winners;
+		return new ArrayList<>(selectedWinners);
 	}
 
 	@Override

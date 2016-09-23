@@ -21,8 +21,6 @@ import com.facebook.FacebookException;
 import com.facebook.Profile;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
-import com.facebook.share.model.AppInviteContent;
-import com.facebook.share.widget.AppInviteDialog;
 import com.fcasado.betapp.async.AvatarAsyncTask;
 import com.fcasado.betapp.bets.BetsListActivity;
 import com.fcasado.betapp.data.User;

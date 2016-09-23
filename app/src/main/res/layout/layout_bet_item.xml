@@ -26,6 +26,7 @@
             tools:text="Bet # 1"/>
 
         <ImageView
+            android:contentDescription="@string/content_description_start_image_meaning_bet_is_favorite"
             android:id="@+id/imageView_favorite"
             android:layout_width="@dimen/item_layout_icon_medium"
             android:layout_height="@dimen/item_layout_icon_medium"

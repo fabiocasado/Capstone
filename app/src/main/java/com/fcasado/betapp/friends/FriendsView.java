@@ -1,6 +1,5 @@
 package com.fcasado.betapp.friends;
 
-import com.fcasado.betapp.data.Bet;
 import com.fcasado.betapp.data.User;
 import com.hannesdorfmann.mosby.mvp.MvpView;
 

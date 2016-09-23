@@ -5,6 +5,7 @@
              android:layout_height="match_parent">
 
     <ImageView
+        android:contentDescription="@string/content_description_home_screen_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
@@ -32,6 +33,7 @@
                 android:layout_weight="0.4"/>
 
             <ImageView
+                android:contentDescription="@string/content_description_user_avatar_image"
                 android:id="@+id/imageView_avatar"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -67,7 +69,7 @@
                 android:id="@+id/button_get_started"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Get started"
+                android:text="@string/get_started"
                 android:textColor="@android:color/white"
                 android:layout_marginTop="@dimen/container_vertical_margin"
                 android:layout_marginBottom="@dimen/container_vertical_margin"

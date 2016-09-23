@@ -10,6 +10,7 @@
     android:orientation="horizontal">
 
     <ImageView
+        android:contentDescription="@string/content_description_user_avatar_image"
         android:id="@+id/imageView_avatar"
         android:layout_width="@dimen/item_layout_avatar_medium"
         android:layout_height="@dimen/item_layout_avatar_medium"

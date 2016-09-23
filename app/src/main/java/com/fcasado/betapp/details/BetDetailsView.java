@@ -2,9 +2,6 @@ package com.fcasado.betapp.details;
 
 import com.fcasado.betapp.data.Bet;
 import com.fcasado.betapp.data.BetDataView;
-import com.hannesdorfmann.mosby.mvp.MvpView;
-
-import java.util.List;
 
 /**
  * Created by fcasado on 7/1/16.

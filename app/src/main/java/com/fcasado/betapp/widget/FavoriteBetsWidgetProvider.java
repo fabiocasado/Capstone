@@ -6,7 +6,6 @@ import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
@@ -19,6 +18,25 @@ import com.fcasado.betapp.details.BetDetailsActivity;
 public class FavoriteBetsWidgetProvider extends AppWidgetProvider {
 	public static final String EXTRA_BET_ID = "com.fcasado.betapp.EXTRA_BET_ID";
 	public static final String OPEN_BET_ACTION = "com.fcasado.betapp.OPEN_BET_ACTION";
+
+	static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
+								int appWidgetId) {
+		Intent intent = new Intent(context, FavoriteBetsService.class);
+		intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+
+		RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_favorite_bets);
+		views.setRemoteAdapter(R.id.listView_favorite_bets, intent);
+		views.setEmptyView(R.id.listView_favorite_bets, R.id.textView_empty_favorite_bets);
+
+		Intent toastIntent = new Intent(context, FavoriteBetsWidgetProvider.class);
+		toastIntent.setAction(FavoriteBetsWidgetProvider.OPEN_BET_ACTION);
+		toastIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+		PendingIntent toastPendingIntent = PendingIntent.getBroadcast(context, 0, toastIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+		views.setPendingIntentTemplate(R.id.listView_favorite_bets, toastPendingIntent);
+
+		appWidgetManager.updateAppWidget(appWidgetId, views);
+	}
 
 	@Override
 	public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
@@ -61,25 +79,6 @@ public class FavoriteBetsWidgetProvider extends AppWidgetProvider {
 	@Override
 	public void onDisabled(Context context) {
 		// Enter relevant functionality for when the last widget is disabled
-	}
-
-	static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
-								int appWidgetId) {
-		Intent intent = new Intent(context, FavoriteBetsService.class);
-		intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-
-		RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_favorite_bets);
-		views.setRemoteAdapter(R.id.listView_favorite_bets, intent);
-		views.setEmptyView(R.id.listView_favorite_bets, R.id.textView_empty_favorite_bets);
-
-		Intent toastIntent = new Intent(context, FavoriteBetsWidgetProvider.class);
-		toastIntent.setAction(FavoriteBetsWidgetProvider.OPEN_BET_ACTION);
-		toastIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-		PendingIntent toastPendingIntent = PendingIntent.getBroadcast(context, 0, toastIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-		views.setPendingIntentTemplate(R.id.listView_favorite_bets, toastPendingIntent);
-
-		appWidgetManager.updateAppWidget(appWidgetId, views);
 	}
 }
 
